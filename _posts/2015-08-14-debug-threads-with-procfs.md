@@ -4,7 +4,7 @@ title: Wait channels as debugging aid for threading bugs
 category: Debugging
 ---
 
-..In every system programmer's carreer inevitably comes a moment when they encounter a non-obvious, asymptomatic, poorly reproduceable bug in critical software running on remote site without remote debug instrumentation.
+..In every system programmer's career inevitably comes a moment when they encounter a non-obvious, asymptomatic, poorly reproduceable bug in critical software running on remote site without remote debug instrumentation.
 
 Well there was a sympthom. The device would put up a diagnostic message amounting to "oops" and stop responding to stimuli. The log file would stop growing while the generating thread is still around. The process would not react to SIGQUIT (denying me a core dump). In other words, a very good hint of a deadlock.
 
