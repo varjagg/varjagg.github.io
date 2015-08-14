@@ -38,7 +38,7 @@ Now, sending a message can block in one case only: the queue is full. Again, we 
     151273          0     0       16384        128   306   306
 ```
 
-Yep, `qnum` is at 128, the limit on the system, so the queue is full. The only place that consumes the queue is the dispatcher thread, and the lost likely way for *that* part to lock up is for notification loop to block on some call.
+Yep, `qnum` is at 128, the limit on the system, so the queue is full. The only place that consumes the queue is the dispatcher thread, and the most likely way for *that* part to lock up is for notification loop to block on some call.
 
 After checking the `wchan` value of the dispatcher thread versus one on a healthy system, the likely offender is found:
 
