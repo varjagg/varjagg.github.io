@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Wait channels as debugging aid for threading bugs
-category: Debugging, Linux
+category: Debugging
 ---
 
 ..In every system programmer's carreer inevitably comes a moment when they encounter a non-obvious, asymptomatic, poorly reproduceable bug in critical software running on remote site without remote debug instrumentation.
@@ -14,9 +14,9 @@ In cases like this, however, there's still a great tool at disposal: `wchan` (wa
 
 ```
  (35) wchan  %lu
-               This  is the "channel" in which the process is waiting.  It is the address
-			   of a location in the kernel where the process is sleeping.  The corresponding
-			   symbolic name can be found in /proc/[pid]/wchan.
+      This  is the "channel" in which the process is waiting.  It is the address
+	  of a location in the kernel where the process is sleeping.  The corresponding
+	  symbolic name can be found in /proc/[pid]/wchan.
 ```
 
 Each process has also associated tasks, in this case threads, found in `/proc/[pid]/tasks/`, which is again a list of PIDs with a `wchan` field associated. I start with skimming through the application threads on an affected system, looking for something out of ordinary.
@@ -34,8 +34,8 @@ Now, sending a message can block in one case only: the queue is full. Again, we 
 
 ```
  # cat /proc/sysvipc/msg
-       key      msqid perms      cbytes       qnum lspid lrpid ...
-    151273          0     0       16384        128   306   306 ...
+       key      msqid perms      cbytes       qnum lspid lrpid 
+    151273          0     0       16384        128   306   306
 ```
 
 Yep, `qnum` is at 128, the limit on the system, so the queue is full. The only place that consumes the queue is the dispatcher thread, and the lost likely way for *that* part to lock up is for notification loop to block on some call.
