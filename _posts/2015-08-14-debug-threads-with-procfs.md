@@ -8,7 +8,7 @@ category: Debugging
 
 Well there was a symptom. The device would put up a diagnostic message amounting to "oops" and stop responding to stimuli. The log file would stop growing while the generating thread is still around. The process would not react to SIGQUIT (denying me a core dump). In other words, a very good hint of a deadlock.
 
-To top that, the issue would appear only on a few devices out of a hundred, and after running for at least a few weeks.
+To top that, the issue would appear only on few devices out of a hundred, and after running for at least few weeks.
 
 In cases like this, however, there's still a great tool at disposal: `wchan` (wait channel) of procfs. Per the manpage:
 
