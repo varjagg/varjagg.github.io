@@ -23,7 +23,7 @@ Each process has also associated tasks, in this case threads, found in `/proc/[p
 
 The application is structured around a central SYSV message queue, where a state machine dispatches the messages and notifies the subscribed functional modules. Some of the modules are separate threads, but a number of simpler tasks are executed directly in the dispatcher thread.
 
-Looking at the dispatcher process first reveals it is blocked in `do_msgsnd()`: the kernel call for sending SysV IPC message:
+Looking at the one of the threads reveals it is blocked in `do_msgsnd()`: the kernel call for sending SysV IPC message:
 
 ```
  # cat /proc/306/task/311/wchan 
