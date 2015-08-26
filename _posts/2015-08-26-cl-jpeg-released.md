@@ -6,7 +6,8 @@ category: Lisp
 
 A long due update to Common Lisp JPEG Library has now been merged into [sharplispers/cl-jpeg](https://github.com/sharplispers/cl-jpeg).
 
-Summary of changes:
+The summary of changes:
+
 * The various global state tables and counters were moved into special variables of decoder/encoder functions. This should address the concerns of thread safety.
 * The monolithic source file was broken up into several according with modern way of structuring the projects.
 * Metadata for :author and :description was added to the project's .asd.
