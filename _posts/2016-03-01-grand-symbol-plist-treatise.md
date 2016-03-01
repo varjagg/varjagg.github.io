@@ -48,10 +48,12 @@ Granted, there was no explicit `this`/self-reference to be used in stored functi
   `(defun ,name ,args
 	(let ((this ',name))
 	  ,@body)))
-
+{% endhighlight %}
+{% highlight cl %}
 (mydefun foo ()
   this)
-
+{% endhighlight %}
+{% highlight cl %}
 (foo) => FOO
 {% endhighlight %}
 
