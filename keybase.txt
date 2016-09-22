@@ -1,0 +1,73 @@
+==================================================================
+https://keybase.io/varjag
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://funcall.org
+  * I am varjag (https://keybase.io/varjag) on keybase.
+  * I have a public key with fingerprint FED6 9C7A C073 D075 2921  25A4 8433 1470 0E7D 57FC
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "01017db5d995c9930bc1a738767ee7b75f8351fbc7528bfe9e4e9aadf7ff387f44000a",
+            "fingerprint": "fed69c7ac073d075292125a4843314700e7d57fc",
+            "host": "keybase.io",
+            "key_id": "843314700e7d57fc",
+            "kid": "01017db5d995c9930bc1a738767ee7b75f8351fbc7528bfe9e4e9aadf7ff387f44000a",
+            "uid": "ce0962ed833a88b85519860334d94b19",
+            "username": "varjag"
+        },
+        "revoke": {
+            "sig_ids": [
+                "ecf3d5792c8c66e094d14b315f72738a33850771deff6e7b3d98840009234baf0f"
+            ]
+        },
+        "service": {
+            "hostname": "funcall.org",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1474529475,
+    "expire_in": 157680000,
+    "prev": "f9671bf50b5bcae82a5b03d5ac36c52c3c15f3ee3ec4207918066a367b973851",
+    "seqno": 19,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owGtkl+IVUUcx+/umnddzayMNBaESZBw2+acOXNm5hJcBH0w1AevILtS1/l797i3
+c27nnL0q632QBP88pKhFSy0FEvsgUbK6rCG5pZFLrSVSEaUobqYQ+1BEaqvbnMXe
+euxpmJnv7/v7/L4zhx5tyTU37UGLawsbm6ebvrotcptv7LvQD0SkdoJCP+jVs4uu
+Kp2k5d5AgQKADnSIElgxhiVjCArpcIIo8YnWRBBsKMKOEZJglwqjmfY041wZYoxV
+Gc+DEHLQAUwQVnRci4MwtbZGK59JwiUkSEFby1zHxdyjHkKORyDURGFipC3siZKs
+wsIJnujOILJndlOexfsP/f/M3TdrJzVkvqsVRYhTKijGDqM+RMhTzBMOy4SJjkP+
+qrbqOo+38QpodIBY16NenaWaBBWLnIDCFqClQZaWuZJK37fOnnI8gRxsiGsROUIU
+Q0IcpY3xLSxSjNKMh7nIE9xAA1623rZfPZCz5llGD3ubvlDyarUziisWqhZHaSSj
+qr3oSdNaIWNKd9Yy4XZ9QpQfepRFECr7QLairuMkiEJQcKxUpkFmahP27BN5BHcA
+vaMWxLocZApMfGqxYNZH17PmzCeOMBgKLCTX1OVYQDsrl8iX2JVI2iGR1khLz4WE
+ORT6Pkc+EcwOjh2QTfVaGFlvZkFthoUsuJCnfbEGjbb9Te1zck3NubmPNGdfN9c2
+b9G//3nl8/np1voGNRJsffeNqyfnlD9YfTzOL52brl9/9r2xc1+0DFS6hw7ehxO3
+RtbeLG34dvTMigsnim8/cXvo1HMaHm4fBM/8tn+qddtp0Dy28rNDk/mZ0fstm74c
+7P9kHjxTvHLk+1J59a2e68WbeydXLXtyY9w1eYN+V+x6MF6b/vva2DdvJaUFf2zv
+nlbjIzP5iw+uH/269eDnS/66u27k9erMlTXJm+OfXvbm7yoNtwyD0YFy21OlJRd/
+Pr5szfnHenu6ljaKO46FP+35If9L90vnPlx8tuOw8Kb8hfe2irG7r7Tv7hyc6j/w
+zo8T9WNDA78uB5enXnx8Yt0LG/98/9Lej4YvPf3sx5uqvzfiO8v/AQ==
+=knRB
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/varjag
+
+==================================================================
