@@ -4,7 +4,7 @@ title: Announcing CL-PJSIP
 category: Lisp
 ---
 
-I am pleased to announce [CL-PJSIP](https://github.com/varjagg/cl-pjsip), a Common Lisp wrapper for the popular [PJSIP](http://pjsip.org/) multimedia communications library.
+I am pleased to announce [CL-PJSIP](https://github.com/varjagg/cl-pjsip), a Common Lisp wrapper for [PJSIP](http://pjsip.org/), a popular multimedia communications library.
 
 CL-PJSIP so far supports a limited subset of PJSIP functionality, yet sufficient to implement a simple SIP telephony user agent. Things will get gradually expanded from that.  At the moment, focus is on moving beyond alpha-quality (scary amounts of FFI there) and implimenting Lisp-ideomatic handling of PJSIP components.
 
