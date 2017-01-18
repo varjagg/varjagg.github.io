@@ -4,7 +4,7 @@ title: New in CL-JPEG
 category: Lisp
 ---
 
-In course of last few months there were numerous small changes introduced to [CL-JPEG](https://github.com/varjagg/cl-jpeg). None substantial enough to warrant own announcement, but taken together perhaps it's due for an update. So here we go, as of version 2.6:
+In course of last few months there were numerous small changes introduced to [CL-JPEG](https://github.com/sharplispers/cl-jpeg). None substantial enough to warrant own announcement, but taken together perhaps it's due for an update. So here we go, as of version 2.6:
 
 * Pre-allocated buffers in `DECODE-IMAGE` and `DECODE-STREAM` are now supported. This should help reduce consing in bulk-processing applications. The buffer can be pre-allocated based on dimensions via `JPEG:ALLOCATE-BUFFER`.
 * CMYK JPEG support. YCCK to CMYK conversion is now performed by decoder. To convert into 3-component RGB, use `JPEG:CONVERT-CMYK-TO-RGB` convenience function.
