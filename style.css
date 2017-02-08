@@ -1,5 +1,5 @@
 body {
-    font-size: 12px;
+    font-size: 14px;
     font-family: Verdana, Arial, SunSans-Regular, Sans-Serif;
     color:#564b47;  
     padding-left: 50px;
@@ -24,24 +24,21 @@ hr {
     margin-left: 0;
     padding-left: 0;
 	width: 100%;
-	min-width: 840px;
+	min-width: 1100px;
 }
 
 pre {
-    background-color: #E8E8E8;
     margin-left: 30px;
     padding: 5px;
     width: 90%;
 }
 
 code {
-    background-color: #E8E8E8;
     padding-left: 3px;
     padding-right: 3px;
 }
 
 pre {
-    background-color: #E8E8E8;
     margin-left: 30px;
     padding: 5px;
     width: 80%;
@@ -62,7 +59,7 @@ a:hover {
 main {
 
 	width: 75%;
-	min-width: 800px;
+	min-width: 940px;
 	margin-left: 150px;
 	display: block;
 }
