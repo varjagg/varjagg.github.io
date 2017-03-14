@@ -4,7 +4,7 @@ title: MS1201.02 single-board PDP-11 clone
 category: Hadrware Vintage PDP
 ---
 
-Among the first computer related-books I read was a PDP-11 programmer's manual, loaned in a library. It was a bit too dense for someone who never seen a computer in their life. Save for the random bits like bus arbitrage or advantages of magnetic domain memory over core, nothing stuck really. A bit later came my first real programming experience, a few simple BASIC programs on [DVK](https://en.wikipedia.org/wiki/DVK), a DEC PDP-11 clone, under RT-11.
+Among the first computer related-books I read was a PDP-11 programmer's manual, borrowed in a library. It was a bit too dense for someone who never seen a computer in their life. Save for the random bits like bus arbitrage or advantages of magnetic domain memory over core, nothing stuck really. A bit later came my first real programming experience, a few simple BASIC programs on [DVK](https://en.wikipedia.org/wiki/DVK), a DEC PDP-11 clone, under RT-11.
 
 Then this winter, browsing eBay junkyards, I came across an MS-1201.02: a Q-Bus board at heart of DVK. A couple weeks later, it was on my desk:
 
