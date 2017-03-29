@@ -8,7 +8,7 @@ I enjoy my customized mechanical [WASD](http://www.wasdkeyboards.com/) keyboard 
 
 ![Symbolics tribute keyboard](/images/wasd/1.jpg)
 
-Its signage and cap colors are inspired by early Lisp machine 'space cadet' keyboards. Not anywhere a close functonal match certainly but I do like the looks. And unlike the the original, it comes in stubby, messy-desk-space-preserving 87-key version.
+Its signage and cap colors are inspired by early Lisp machine 'space cadet' keyboards. Not anywhere a close functonal match certainly but I do like the looks. And unlike the the original it comes in short, messy-desk-space-preserving 87-key version.
 
 The inscriptions are changed to oldskool. Alt is META, AltGr is GREEK, caps is HYPER and left-Win is SUPER. SUPER is bound to X11 layout switch in my system, GREEK is just the normal Europeand 2nd-level shift. HYPER is remapped to.. well actual Hyper. This adds a bunch of new keybinding space in Emacs:
 
