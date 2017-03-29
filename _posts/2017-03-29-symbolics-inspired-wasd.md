@@ -1,10 +1,10 @@
 ---
 layout: post
 title: Symbolics-inspired WASD keyboard layout
-category: Hadrware lisp
+category: lisp hardware
 ---
 
-I enjoy my customized mechanical [WASD](http://www.wasdkeyboards.com/) keyboard since last summer:
+I'm enjoying my customized mechanical [WASD](http://www.wasdkeyboards.com/) keyboard since last summer:
 
 ![Symbolics tribute keyboard](/images/wasd/1.jpg)
 
