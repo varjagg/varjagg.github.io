@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Symbolics-inspired WASD keyboard layout
-category: lisp
+category: Lisp
 ---
 
 I'm enjoying my customized mechanical [WASD](http://www.wasdkeyboards.com/) keyboard since last summer:
