@@ -8,7 +8,7 @@ category: Lisp
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/m5qrVH-7WpM" frameborder="0" allowfullscreen></iframe>
 
-The code tries to detect how many cores the host machine has, then creates the corresponding number of worker units. The workset ImageNet subunits list is built up, which are then assigned to the workunits. Each workunit fetches annotation file, extracts the bounding boxes and image file reference, decodes the corresponding JPEG file, handles processing with OptiCL and sends the result via shared channel to display thread. It is impressive compact the code is when leveraging random bits of the ecosystem available through Quicklisp.
+The code tries to detect how many cores the host machine has, then creates the corresponding number of worker units. The workset ImageNet subunits list is built up, which are then assigned to the workunits. Each workunit fetches annotation file, extracts the bounding boxes and image file reference, decodes the corresponding JPEG file, handles processing with OptiCL and sends the result via shared channel to display thread. It is impressive how compact the code can be when leveraging random bits of the ecosystem available through Quicklisp.
 
 In this setup only the luminance component of JPEG is extracted and then thresholded from medium gray. [The video](https://www.youtube.com/watch?v=m5qrVH-7WpM) is filmed on an old quad i5-2500. On my 8-core i7-6700 box with visualisation off, it averages some 200K processed images per hour.
 
