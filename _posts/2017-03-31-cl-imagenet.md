@@ -10,6 +10,6 @@ category: Lisp
 
 The code tries to detect how many cores the host machine has, then creates the corresponding number of worker units. The workset ImageNet subunits list is built up, which are then assigned to the workunits. Each workunit fetches annotation file, extracts the bounding boxes and image file reference, decodes the corresponding JPEG file, handles processing with OptiCL and sends the result via shared channel to display thread. It is impressive compact the code is when leveraging random bits of the ecosystem available through Quicklisp.
 
-In this setup only the luminance component of JPEG is extracted and then thresholded from medium gray. The video is filmed on an old quad i5-2500. On my 8-core i7-6700 box with visualisation off, it averages some 200K processed images per hour.
+In this setup only the luminance component of JPEG is extracted and then thresholded from medium gray. [The video](https://www.youtube.com/watch?v=m5qrVH-7WpM) is filmed on an old quad i5-2500. On my 8-core i7-6700 box with visualisation off, it averages some 200K processed images per hour.
 
 Tested lightly with SBCL on Linux. One known problem place is the message channel gradually eating up memory with visualization on, but as it's only used in tests it hasn't been a pressing need to fix yet.
