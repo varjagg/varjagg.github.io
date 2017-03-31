@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Sifting through ImageNet in Lisp
+title: Sifting through ImageNet dataset in Lisp
 category: Lisp
 ---
 
