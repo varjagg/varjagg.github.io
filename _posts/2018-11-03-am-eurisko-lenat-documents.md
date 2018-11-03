@@ -6,7 +6,7 @@ category: Lisp
 
 Sharing here a small collection of documents by Douglas B. Lenat related to design AM and EURISKO that I assembled over the years. These are among the most famous programs of symbolic AI era. They represent so-called 'discovery systems'. Unlike expert systems, they run loosely-constrained heuristic search in a complex problem domain.
 
-AM was Lenat's [doctoral thesis](docs/am-eurisko/a155378.pdf) and the first attempt of such kind. Unfortunately, it's all described in rather informal pseudocode, a decision that led to a later criticism. Lenat has responded to the criticism in one of the better known publications, [Why AM and EURISKO appear to work](docs/am-eurisko/Why_AM_and_EURISKO_Appear_to_Work.pdf).
+AM was Lenat's [doctoral thesis](docs/am-eurisko/a155378.pdf) and the first attempt of such kind. Unfortunately, it's all described in rather informal pseudocode, a decision that led to a number of misunderstandings in follow-up criticism. Lenat has responded to that in one of the better known publications, [Why AM and EURISKO appear to work](docs/am-eurisko/Why_AM_and_EURISKO_Appear_to_Work.pdf).
 
 AM was built around concept formation process utilizing a set of pre-defined heuristics. EURISKO takes it a step further, adding the mechanism of running discovery search on its own heuristics. Both are specimen of what we could call 'Lisp-complete' programs: designs that require Lisp or its hypothetical, similarly metacircular equivalent to function. Their style was idiomatic to INTERLISP of 1970s, making heavy use of FEXPRs and self-modification of code.
 
