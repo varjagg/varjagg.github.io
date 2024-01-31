@@ -1,145 +1,155 @@
 body {
-    font-size: 14px;
-    font-family: Verdana, Arial, SunSans-Regular, Sans-Serif;
-    color:#564b47;  
-    padding-left: 50px;
-    padding-right: 20%;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  color: #f2f2f2;
+  padding: 0 2rem;
+  background-color: #2b2b2b;
 }
 
-body>header h1>a {
-    color:#564b47;
-    text-decoration: none;
+body > header h1 > a {
+  color: #f2f2f2;
+  text-decoration: none;
 }
 
-body>header h4 {
-    margin-top: -10px;
+body > header h4 {
+  margin-top: -10px;
 }
 
-h1,h2,h3,h4 {
-    width: 100%;
-    min-width: 840px;
+h1, h2, h3, h4 {
+  width: 100%;
+  min-width: 840px;
+  font-weight: bold;
+  color: #f2f2f2;
 }
 
 hr {
-    margin-left: 0;
-    padding-left: 0;
-	width: 100%;
-	min-width: 1100px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 1100px;
+  border: none;
+  border-bottom: 1px solid #3b3b3b;
 }
 
 pre {
-    margin-left: 30px;
-    padding: 5px;
-    width: 90%;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  width: 90%;
+  background-color: #333;
+  color: #ddd;
+  overflow-x: auto;
 }
 
 code {
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-pre {
-    margin-left: 30px;
-    padding: 5px;
-    width: 80%;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  background-color: #333;
+  color: #ddd;
 }
 
 table {
-    border: none;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-td {
-    padding-left: 20px;
+th, td {
+  padding: 0.5rem;
+  border: none;
+  text-align: left;
+}
+
+a, a:visited, a:active {
+  color: #bd2dfd;
+  text-decoration: none;
 }
 
 a:hover {
-    color: #696969;
+  color: #cccccc;
 }
 
 main {
-
-	width: 75%;
-	min-width: 940px;
-	margin-left: 150px;
-	display: block;
+  width: 75%;
+  min-width: 940px;
+  margin: 2rem auto;
+  display: block;
 }
 
 nav {
-	float: left;
-	width: 150px;
-	min-width: 150px;
+  float: left;
+  width: 150px;
+  min-width: 150px;
+  background-color: #3b3b3b;
 }
 
-nav a,
-nav a:visited,
-nav a:active {
-    color: blue;
+nav a, nav a:visited, nav a:active {
+  color: #ddd;
+  text-decoration: none;
 }
 
 nav a:hover {
-    color: #696969;
+  color: #cccccc;
 }
 
 nav li {
-    margin-left: -25px;
-    list-style: none;
+  margin: 0;
+  list-style: none;
 }
 
 footer {
-	clear: both;
-	width: 100%;
+  clear: both;
+  width: 100%;
+  background-color: #2b2b2b;
+  padding: 1rem;
 }
 
 article {
-	margin: 10px;
+  margin: 1rem;
 }
 
-article h2>a,
-article h2>a:visited,
-article h2>a:active {
-    text-decoration: none;
-    color: blue;
+article h2 > a, article h2 > a:visited, article h2 > a:active {
+  text-decoration: none;
+  color: #ddd;
 }
 
-article h2>a:hover {
-    color: #696969;
+article h2 > a:hover {
+  color: #cccccc;
 }
 
 article .entry {
-	margin-left: 15px;
-	padding: 10px;
+  margin-left: 1.5rem;
+  padding: 1rem;
+  border-left: 3px solid #3b3b3b;
 }
 
 article .entry img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
 }
 
 article header span {
-	margin-top: -10px;
-	margin-bottom: -3px;
-	margin-left: 5px;
+  margin-top: -10px;
+  margin-bottom: -3px;
+  margin-left: 5px;
 }
 
 article header h2 {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 section address {
-    margin-left: 15px;
+  margin-left: 1.5rem;
 }
 
 #paginator {
-    padding: 10px;
+  padding: 1rem;
 }
 
 #paginator a {
-    text-decoration: none;
+  text-decoration: none;
+  color: #ddd;
 }
 
 .more {
-    margin-left: 80%;
+  margin-left: 80%;
 }
-
