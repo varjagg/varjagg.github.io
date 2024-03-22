@@ -10,5 +10,5 @@ However, Lenat's death in August last year has unlocked his [SAILDART archives](
 
 While I marveled at the idea of discovery systems before I hadn't even considered ever running EURISKO myself as a possibility. Truly an Indiana Jones finding the Lost Ark moment. Yet this very low probability event has indeed happened, as documented in the video below. Rewind to 8:20 for the Medley run.
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=buqwctwheoI" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/buqwctwheoI?si=gvZQbZlnmhCOqiox" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
