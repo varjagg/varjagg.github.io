@@ -84,7 +84,7 @@ First step in establishing reliability baseline was to come up with abstraction 
 					:process-name "Automatic Volume Control"))
 {% endhighlight %}
 
-…and the methods that would be able to spin, quit, pause or resume the process based on its ~service-tag~. This helps us ensure that we don't ever end up with a backtrace or with an essential process quietly knocked out.
+…and the methods that would be able to spin, quit, pause or resume the process based on its `service-tag`. This helps us ensure that we don't ever end up with a backtrace or with an essential process quietly knocked out.
 
 ## Plans
 
@@ -107,7 +107,7 @@ To perform its function Evacsound should be able to centrally plan and distribut
 
 We can see above that two plans for each evacuation direction are concatenated then re-normalized in time. The resulting plan is then modulo adjusted in time to run in parallel subdivisions of specified duration.
 
-Generated plans are sets of node ID, effect direction and time delta tuples. They do not have association of commands and absolute times yet, which are the job of ~ACTUALIZE-PLAN~.
+Generated plans are sets of node ID, effect direction and time delta tuples. They do not have association of commands and absolute times yet, which are the job of `ACTUALIZE-PLAN`.
 
 ## Command Language
 
@@ -119,7 +119,7 @@ It is an established wisdom now that multiple inheritence is an anti-pattern, no
 
 The next essential task is communication. Depending on the plan we may communicate with all or subsets of nodes, in particular sequence or simultaneously, synchronously or async, with or without expectation of reported results. For instance we may want to get a noise estimation from microphones for volume control, and that would need to be done for all nodes at once while expecting a result set or reports. A PA message would have to be played synchronized but the result does not really matter. Or a temperature change notice may arrive unprompted to be considered by fire detection algorithm.
 
-This particular diverse but restricted set of patterns wasn't particularly well treated by existing frameworks and libraries, so we rolled our own on top of socket library, POSIX threads and condition variables. Our small DSL has two basic constructs, the asyncronous ~communicate>~ for outgoing commands and ~communicate<~ for expecting the result set, which can be composed as one operation ~communicate~. A system can generate distributed command such as
+This particular diverse but restricted set of patterns wasn't particularly well treated by existing frameworks and libraries, so we rolled our own on top of socket library, POSIX threads and condition variables. Our small DSL has two basic constructs, the asyncronous `communicate>` for outgoing commands and `communicate<` for expecting the result set, which can be composed as one operation `communicate`. A system can generate distributed command such as
 
 {% highlight lisp linenos %}
 (communicate (actualize-plan (evacuation-prelude-plan s)
@@ -129,11 +129,11 @@ This particular diverse but restricted set of patterns wasn't particularly well 
 			       :media-name "prelude"))
 {% endhighlight %}
 
-What happens here is that previously generated plan is actualized with FUSE-MEDIA-FILE command for every entry. That command inherits several timing properties:
+What happens here is that previously generated plan is actualized with `FUSE-MEDIA-FILE` command for every entry. That command inherits several timing properties:
 
-* absolute BASE-TIME set here
-* DELTA that is set from the plan's pre-calculated time deltas
-* TIME-TO-COMPLETE (implicit here) which specifies expected command duration and is used to calculate value timeout for COMMUNICATE
+* absolute `BASE-TIME` set here explicitly
+* `DELTA` that is set from the plan's pre-calculated time deltas
+* `TIME-TO-COMPLETE` (implicit here) which specifies expected command duration and is used to calculate value timeout for `COMMUNICATE`
 
 If any network failure occurs, a reply from the node times out or node reports a malfunction an according condition is signaled. This mechanism allows us to effectively partition distributed networked operation failures into cases conveniently guarded by HANDLER-BIND wrappers. For instance, a macro that just logs the faults and continues the operation can be defined simply as:
 
@@ -153,7 +153,7 @@ If any network failure occurs, a reply from the node times out or node reports a
 
 This wrapper would guard both send and receive communication errors, using the restarts to proceed once the event is logged.
 
-So the birds eye view is,
+So the bird's eye view is,
 
 * we generate the plans using comprehensible, composable, pragmatic constructs
 * we communicate in terms of objects naturally mapped from the problem domain
