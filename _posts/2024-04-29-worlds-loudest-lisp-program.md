@@ -17,11 +17,15 @@ So far Norway have been spared of mass casualty tunnel fires but there have been
 * project engineer, taking care of SCADA integration and countless practicalities of equipment for tunnels
 * logistics specialist ensuring the flow of hundreds of shipments on the peak of pandemic
 
-(picture wrp node)
+
+![Live hacking](/images/loudest-lisp-program/wrp_node.jpg)
+*My colleague Wesley patching up a prototype live*
 
 Atop of this we were also hiring some brilliant MEs and EEs as contractors. Two of Norway's leading research institutes handled the science of validating psychoacoustics and simulating fire detecton.
 
 At this point the system is already installed or is being installed in 6 tunnels in Norway with another 8 tunnels to some 29km total on order. We certainly do need to step up our international marketing efforts though.
+
+![In the tunnels](/images/loudest-lisp-program/evac_whizz.gif)
 
 # The Concept
 
@@ -29,7 +33,7 @@ How do you approach a problem like this? The only thing that can be improved und
 
 Sound is more persistent, although there are numerous challenges to using it in the tunnels:
 
-* The background noise from smoke extraction fans can be very high, and if you go for speech the threshold for intelligibility has to be at least +10dB over the noise floor
+* The background noise from smoke extraction fans can be very high, and if you go for speech the threshold for intelligibility has to be at least 10dB over the noise floor
 * Public announcement messages alone are not very efficient. They are great in the early phase of fire to give heads up to evacuate, but kind of useless once the visibility is limited. At that point you also know you are in trouble already.
 * Speech announcements rely on comprehension of the language. In one of Gudvangatunnelen fires a bus full of foreign tourists who spoke neither Norwegian nor English has been caught in the thick of it. Fortunately a local lorry driver stopped by to collect them.
 * Acoustic environment in tunnels ranges from poor to terrible. Echo of 4-5 seconds in midrange frequencies is rather typical. 
@@ -39,6 +43,8 @@ In addition to above, the system should have still provided visual clues and all
 We decided to start our design from psychoacoustic end and let the dice fall for the rest. The primary idea was to evacuate people by aiding with directional sound signals. The mechanism was worked out together with SINTEF research institute who conducted live trials on general population. A combination of sound effect distance requirements and technical restrictions in the tunnel has led us to devices installed at 3m height along the wall at 25m intervals. Which was just as well, since it allowed both for application of acoustic energy in lest wasteful, reverberating way *and* provided sensible intervals for radiated heat detection.
 
 (picture node)
+
+A typical installation is a few dozen to several hundred nodes in a single tunnel. Which brings us to the headline: at the rated 50W output per device, we have projects that easily exceed 20KW acoustic power in operation, all orchestrated by Lisp code.
 
 # Tech stack
 
@@ -65,7 +71,9 @@ At its heart Evacsound is a soft real time, distributed system where a central o
 
 The first point has channeled us to using pre-uploaded audio rather than digital multicasting. This uses the network much more efficiently and helps to eliminate most synchronization issues. Remember that sound has to be timed accounting for propagation distances between the nodes, and 10 millisecond jitter gives you over 3 meters deviation. Then, the command and control structure should be flexible enough for executing elaborate plans involving sound and lighting effects yet tolerate inevitable misfortunes of real life.
 
-Overall the system makes heavy use of CLOS with a smattering of macros in places where it matters.
+Overall the system makes heavy use of CLOS with a smattering of macros in places where it matters. Naturally there's a lot of moving parts in the system. We're not going to touch SCADA interfacing, power and resource scheduling, fire detection, self calibration and node replacement subsystems. Instead we're going to have a birds eye view on the bits that make reliable distributed operation possible.
+
+## Processes
 
 First step in establishing reliability baseline was to come up with abstraction for isolated tasks to be used both on the central and on the nodes. We built it on top of ~cl-threadpool~, layering on topof it an execution abstration with start, stop and fault handlers. These tie in to a watchdog monitor process with straightforward decision logic. An Evacsound entity would run a service registry where a service instance would look along these lines:
 
@@ -78,6 +86,8 @@ First step in establishing reliability baseline was to come up with abstraction 
 {% endhighlight %}
 
 …and the methods that would be able to spin, quit, pause or resume the process based on its ~service-tag~. This helps us ensure that we don't ever end up with a backtrace or with an essential process quietly knocked out.
+
+## Plans
 
 To perform its function Evacsound should be able to centrally plan and distributed execute elaborate tasks. People often argue what a DSL really is (and does it really have to have macros) but in our book if it's special purpose, composable and is abstraced from implimentation details it is one. Our planner is one example. We can create time distributed plans in abstract, we can actualize abstract plabs with specific base time for operatons, we can segment/concatenate/renormalize plans in various ways. For instance, below is a glimpse of abstract plan for evcation generated by the system:
 
@@ -99,6 +109,12 @@ To perform its function Evacsound should be able to centrally plan and distribut
 We can see above that two plans for each evacuation direction are concatenated then re-normalized in time. The resulting plan is then modulo adjusted in time to run in parallel subdivisions of specified duration.
 
 Generated plans are sets of node ID, effect direction and time delta tuples. They do not have association of commands and absolute times yet, which are the job of ~ACTUALIZE-PLAN~.
+
+## Command Language
+
+The central and nodes communicate in terms of CLOS instances of the classes comprising the command language. 
+
+## Communication
 
 The next essential task is communication. Depending on the plan we may communicate with all or subsets of nodes, in particular sequence or simultaneously, synchronously or async, with or without expectation of reported results. For instance we may want to get a noise estimation from microphones for volume control, and that would need to be done for all nodes at once while expecting a result set or reports. A PA message would have to be played synchronized but the result does not really matter. Or a temperature change notice may arrive unprompted to be considered by fire detection algorithm.
 
