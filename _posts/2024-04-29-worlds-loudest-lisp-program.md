@@ -15,8 +15,7 @@ So far Norway have been spared of mass casualty tunnel fires but there have been
 * software engineer who could also do some mechanical design and basic electronics
 * electrical enginer who could also code
 * project engineer, taking care of SCADA integration and countless practicalities of equipment for tunnels
-* logistics specialist ensuring the flow of hundreds of shipments on the peak of pandemic
-
+* logistics specialist ensuring the flow of hundreds of shipments back and forth on the peak of pandemic
 
 ![Live hacking](/images/loudest-lisp-program/wrp_node.jpg)
 *My colleague Wesley patching up a prototype live*
@@ -44,7 +43,7 @@ We decided to start our design from psychoacoustic end and let the dice fall for
 
 (picture node)
 
-A typical installation is a few dozen to several hundred nodes in a single tunnel. Which brings us to the headline: at the rated 50W output per device, we have projects that easily exceed 20KW acoustic power in operation, all orchestrated by Lisp code.
+A typical installation is a few dozen to several hundred nodes in a single tunnel. Which brings us to the headline: at the rated 50W output per device, we have projects that easily amount to tens of kilowatts acoustic power in operation, all orchestrated by Lisp code.
 
 # Tech stack
 
@@ -63,7 +62,7 @@ We however do use CCL liberally in development and we employ SBCL/x86 in the tes
 
 # System Design
 
-At its heart Evacsound is a soft real time, distributed system where a central orchestrates synchronized operation of hundreds of nodes. Its problem domain and operational circumstances add some constraints:
+At its heart Evacsound is a soft real time, distributed system where a central stages time synchronized operation across hundreds of nodes. Its problem domain and operational circumstances add some constraints:
 
 1. The system shares comms infrastructure with other industrial equipment even though on own VLAN. Network virtualization abstraction breaks down in real time operation: the product has to tolerate load spikes and service degradations caused by other euqipment yet be mindful of network traffic it generates.
 2. The operations is completely unmanned. There are no SREs; nobody's on pager duty for the system. After commissioning there's typically no network access for vendors to the site anyway. The thing have to sit there on its own and quietly do its job for the next couple decades until the scheduled tunnel renovation.
@@ -71,11 +70,11 @@ At its heart Evacsound is a soft real time, distributed system where a central o
 
 The first point has channeled us to using pre-uploaded audio rather than digital multicasting. This uses the network much more efficiently and helps to eliminate most synchronization issues. Remember that sound has to be timed accounting for propagation distances between the nodes, and 10 millisecond jitter gives you over 3 meters deviation. Then, the command and control structure should be flexible enough for executing elaborate plans involving sound and lighting effects yet tolerate inevitable misfortunes of real life.
 
-Overall the system makes heavy use of CLOS with a smattering of macros in places where it matters. Naturally there's a lot of moving parts in the system. We're not going to touch SCADA interfacing, power and resource scheduling, fire detection, self calibration and node replacement subsystems. Instead we're going to have a birds eye view on the bits that make reliable distributed operation possible.
+Overall the system makes heavy use of CLOS with a smattering of macros in places where it matters. Naturally there's a lot of moving parts in the system. We're not going to touch SCADA interfacing, power and resource scheduling, fire detection, self calibration and node replacement subsystems. The system has also distinct PA mode and two way speech communication using a node as a giant speakerphone: these two also add a bit of complexity. Instead we're going to have an overview on the bits that make reliable distributed operation possible.
 
 ## Processes
 
-First step in establishing reliability baseline was to come up with abstraction for isolated tasks to be used both on the central and on the nodes. We built it on top of ~cl-threadpool~, layering on topof it an execution abstration with start, stop and fault handlers. These tie in to a watchdog monitor process with straightforward decision logic. An Evacsound entity would run a service registry where a service instance would look along these lines:
+First step in establishing reliability baseline was to come up with abstraction for isolated tasks to be used both on the central and on the nodes. We built it on top of a threadpool, layering on topof it an execution abstration with start, stop and fault handlers. These tie in to a watchdog monitor process with straightforward decision logic. An Evacsound entity would run a service registry where a service instance would look along these lines:
 
 {% highlight lisp linenos %}
 (register-service site (make-instance 'avc-process :service-tag :avc
@@ -112,7 +111,9 @@ Generated plans are sets of node ID, effect direction and time delta tuples. The
 
 ## Command Language
 
-The central and nodes communicate in terms of CLOS instances of the classes comprising the command language. 
+The central and nodes communicate in terms of CLOS instances of the classes comprising the command language. In simplest cases they have just the slots to pass values on for the commands to be executed immediately. However with appropriate mixin they can inherit the properties necessary for precision timing control, allowing the commands to be executed in time synchronized manner across sets of nodes in plans.
+
+It is an established wisdom now that multiple inheritence is an anti-pattern, not worth the headache in the long run. However Evacsound make extensive use of it and over the years it worked out just fine. I'm not quite sure what the mechanism is that makes it click. Whether it's because CLOS doesn't suffer from diamond problem, or because typical treatment of the objects using multiple dispatch methods, or something else it really is a non-issue and is a much better abstraction mechanism than containment.
 
 ## Communication
 
@@ -128,5 +129,36 @@ This particular diverse but restricted set of patterns wasn't particularly well 
 			       :media-name "prelude"))
 {% endhighlight %}
 
+What happens here is that previously generated plan is actualized with FUSE-MEDIA-FILE command for every entry. That command inherits several timing properties:
+
+* absolute BASE-TIME set here
+* DELTA that is set from the plan's pre-calculated time deltas
+* TIME-TO-COMPLETE (implicit here) which specifies expected command duration and is used to calculate value timeout for COMMUNICATE
+
+If any network failure occurs, a reply from the node times out or node reports a malfunction an according condition is signaled. This mechanism allows us to effectively partition distributed networked operation failures into cases conveniently guarded by HANDLER-BIND wrappers. For instance, a macro that just logs the faults and continues the operation can be defined simply as:
+
+{% highlight lisp linenos %}
+(defmacro with-guarded-distributed-operation (&body body)
+  `(handler-bind ((distributed-operation-failure
+		   #'(lambda (c)
+		       (log-info "Distibuted opearation issue with condition ~a on ~d node~:p"
+				 (condition-name c) (failure-count c))
+		       (invoke-restart 'communicate-recover)))
+		  (edge-offline
+		   #'(lambda (c)
+		       (log-info "Failed to command node ~a" (uid c))
+		       (invoke-restart 'communicate-send-recover))))
+     ,@body))
+{% endhighlight %}
+
+This wrapper would guard both send and receive communication errors, using the restarts to proceed once the event is logged.
+
+So the birds eye view is,
+
+* we generate the plans using comprehensible, composable, pragmatic constructs
+* we communicate in terms of objects naturally mapped from the problem domain
+* the communication is abstracted away into pseudo-transactional sets of distributed operations with error handling
+
+Altoghether it combines into a robust mass-networked product that is able to thrive in the wild of industrial automation jungle.
 
 *TL;DR Helping people escape tunnel fires with Lisp and funny sounds*
