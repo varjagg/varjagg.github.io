@@ -46,7 +46,7 @@ We decided to start our design from psychoacoustics end and see where it falls f
 
 A typical installation is a few dozen to several hundred nodes in a single tunnel. Which brings us to the headline: we have projects that easily amount to tens of kilowatts acoustic power in operation, all orchestrated by Lisp code.
 
-# Tech stack
+# Tech Stack
 
 The hardware took nearly 20 design iterations until we reached what I would immodestly call the Platonic design for the problem. We were fortunate to have both mechanical and electronic design expertise from our [other products](https://norphonic.com/products/voip-phones-and-accessories/). That allowed us to iterate at an incredible pace. Our software stack has settled on Yocto Linux and Common Lisp. Why CL? That's what I started our earliest design studies with initially. Deadlines were tight, requirements were fluid, the team was small and I can move in Common Lisp really, really fast. I like to think that am also a competent C programmer but it was clear doing it in C would be many times the effort. And with native compilation there's no performance handicap to speak of, so it is hard to justify a rewrite later.
 
