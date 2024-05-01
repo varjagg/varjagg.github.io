@@ -16,7 +16,7 @@ So far Norway have been spared of mass casualty tunnel fires but there have been
 * electrical engineer who could also code
 * two project engineers, dealing with product feasibility w.r.t. regulation and practices, taking care of SCADA integration and countless practicalities of automation systems for tunnels
 * project coordinator who communicated the changes, requirements and arranged tests with the Road Administration and our subcontractors
-* logistics specialist ensuring the flow of hundreds of shipments back and forth on the peak of pandemic
+* logistics specialist ensuring the flow of scores of shipments back and forth on the peak of pandemic
 
 ![Live hacking](/images/loudest-lisp-program/wrp_node.jpeg)
 *Wesley, our EE patching up a prototype live*
