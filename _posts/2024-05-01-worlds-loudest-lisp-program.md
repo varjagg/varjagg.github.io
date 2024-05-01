@@ -48,7 +48,7 @@ A typical installation is a few dozen to several hundred nodes in a single tunne
 
 # Tech stack
 
-The hardware took nearly 20 design iterations until we reached what I would immodestly call the Platonic design for the problem. We were fortunate to have both mechanical and electronic design expertise from our [other products](https://norphonic.com/products/voip-phones-and-accessories/). That allowed us to iterate at an incredible pace. Our software stack has settled on Yocto Linux and Common Lisp. Why CL? That's what I started our earliest design studies with earlier. Deadlines were tight, requirements were fluid, the team was small and I can move in Common Lisp really, really fast. I like to think that am also a competent C programmer but it was clear doing it in C would be many times the effort. And with native compilation there's no performance handicap to speak of, so it is hard to justify a rewrite later.
+The hardware took nearly 20 design iterations until we reached what I would immodestly call the Platonic design for the problem. We were fortunate to have both mechanical and electronic design expertise from our [other products](https://norphonic.com/products/voip-phones-and-accessories/). That allowed us to iterate at an incredible pace. Our software stack has settled on Yocto Linux and Common Lisp. Why CL? That's what I started our earliest design studies with initially. Deadlines were tight, requirements were fluid, the team was small and I can move in Common Lisp really, really fast. I like to think that am also a competent C programmer but it was clear doing it in C would be many times the effort. And with native compilation there's no performance handicap to speak of, so it is hard to justify a rewrite later.
 
 ![Design iterations](/images/loudest-lisp-program/iterations.jpg)
 
@@ -66,10 +66,10 @@ We however do use CCL liberally in development and we employ SBCL/x86 in the tes
 At its heart Evacsound is a soft real time, distributed system where a central stages time synchronized operation across hundreds of nodes. Its problem domain and operational circumstances add some constraints:
 
 1. The system shares comms infrastructure with other industrial equipment even though on own VLAN. Network virtualization abstraction breaks down in real time operation: the product has to tolerate load spikes and service degradation caused by other equipment yet be mindful of network traffic it generates.
-2. The operations is completely unmanned. There are no SREs; nobody's on pager duty for the system. After commissioning there's typically no network access for vendors to the site anyway. The thing have to sit there on its own and quietly do its job for the next couple decades until the scheduled tunnel renovation.
+2. The operations are completely unmanned. There are no SREs; nobody's on pager duty for the system. After commissioning there's typically no network access for vendors to the site anyway. The thing have to sit there on its own and quietly do its job for the next couple decades until the scheduled tunnel renovation.
 3. We have experience designing no-nonsense hardware that lasts: this is how we have repeat business with Siemens, GE and other big players. But with sheer scale of installation you can count on devices going dark over the years. There will be hardware faults, accidents and possible battle attrition from fires. Evacsound has to remain operational despite the damage, allow for redundant centrals and ensure zero configuration maintenance/replacement of the nodes.
 
-The first point has channeled us to using pre-uploaded audio rather than live streaming. This uses the network much more efficiently and helps to eliminate most synchronization issues. Remember that sound has to be timed accounting for propagation distances between the nodes, and 10 millisecond jitter gives you over 3 meters deviation. Then, the command and control structure should be flexible enough for executing elaborate plans involving sound and lighting effects yet tolerate inevitable misfortunes of real life.
+The first point has channeled us to using pre-uploaded audio rather than live streaming. This uses the network much more efficiently and helps to eliminate most synchronization issues. Remember that sound has to be timed accounting for propagation distances between the nodes, and 10 millisecond jitter gives you over 3 meters deviation. This may sound acceptable but a STIPA measurement will have no mercy. Then, the command and control structure should be flexible enough for executing elaborate plans involving sound and lighting effects yet tolerate inevitable misfortunes of real life.
 
 The system makes heavy use of CLOS with a smattering of macros in places where it makes a difference. Naturally there's a lot of moving parts in the product. We're not going into the details of SCADA interfacing, power and resource scheduling, fire detection, self calibration and node replacement subsystems. The system has also distinct PA mode and two way speech communication using a node as a giant speakerphone: these two also add a bit of complexity. Instead we're going to have an overview on the bits that make reliable distributed operation possible.
 
@@ -77,7 +77,7 @@ The system makes heavy use of CLOS with a smattering of macros in places where i
 
 ## Processes
 
-First step in establishing reliability baseline was to come up with abstraction for isolated tasks to be used both on the central and on the nodes. We built it on top of a threadpool, layering on top of it an execution abstraction with start, stop and fault handlers. These tie in to a watchdog monitor process with straightforward decision logic. An Evacsound entity would run a service registry where a service instance would look along these lines:
+First step in establishing reliability baseline was to come up with abstraction for isolated tasks to be used both on the central and on the nodes. We built it on top of a thread pool, layering on top of it an execution abstraction with start, stop and fault handlers. These tie in to a watchdog monitor process with straightforward decision logic. An Evacsound entity would run a service registry where a service instance would look along these lines:
 
 {% highlight lisp %}
 (register-service site
@@ -118,7 +118,7 @@ Generated plans are sets of node ID, effect direction and time delta tuples. The
 
 The central and nodes communicate in terms of CLOS instances of the classes comprising the command language. In simplest cases they have just the slots to pass values on for the commands to be executed immediately. However with appropriate mixin they can inherit the properties necessary for precision timing control, allowing the commands to be executed in time synchronized manner across sets of nodes in plans.
 
-It is an established wisdom now that multiple inheritance is an anti-pattern, not worth the headache in the long run. However Evacsound make extensive use of it and over the years it worked out just fine. I'm not quite sure what the mechanism is that makes it click. Whether it's because CLOS doesn't suffer from diamond problem, or because typical treatment of the objects using multiple dispatch methods, or something else it really is a non-issue and is a much better abstraction mechanism than containment.
+It is established wisdom now that multiple inheritance is an anti-pattern, not worth the headache in the long run. However Evacsound make extensive use of it and over the years it worked out just fine. I'm not quite sure what the mechanism is that makes it click. Whether it's because CLOS doesn't suffer from diamond problem, or because typical treatment of the objects using multiple dispatch methods, or something else it really is a non-issue and is a much better abstraction mechanism than containment.
 
 ## Communication
 
