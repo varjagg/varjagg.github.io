@@ -10,7 +10,7 @@ The story starts in Western Norway, the world capital of tunnels with over 650 l
 
 ![Aftermath of a fire](/images/loudest-lisp-program/gudvangatunnelen.jpg)
 
-So far Norway have been spared of mass casualty tunnel fires but there have been multiple close calls. One of particularly unlucky ones, the 11.5km long Gudvangatunnelen had experienced fires in span of a few years. Thus national Road Administration put forth a challenge to develop a system to augment self-assisted evacuation. [Norphonic](https://norphonic.com/), my employer, had won in a competition of nine contenders on the merits of our pre-existing R&D work. In late 2019 the project has officially started, and despite the setbacks of the pandemic concluded in 2021 with series production of the system now known as [Evacsound](https://evacsound.com/). The whole development on this project was done by a lean team of:
+So far Norway have been spared of mass casualty tunnel fires but there have been multiple close calls. One of particularly unlucky ones, the 11.5km long Gudvangatunnelen had experienced three major fires in span of a few years. Thus national Road Administration put forth a challenge to develop a system to augment self-assisted evacuation. [Norphonic](https://norphonic.com/), my employer, had won in a competition of nine contenders on the merits of our pre-existing R&D work. In late 2019 the project has officially started, and despite the setbacks of the pandemic concluded in 2021 with series production of the system now known as [Evacsound](https://evacsound.com/). The whole development on this project was done by a lean team of:
 
 * software engineer who could also do some mechanical design and basic electronics
 * electrical engineer who could also code
