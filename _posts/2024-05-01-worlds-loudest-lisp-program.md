@@ -8,18 +8,18 @@ It is interesting that while I think of myself as a generalist developer the vas
 
 The story starts in Western Norway, the world capital of tunnels with over 600 located in the area. Tunnels are equipped and maintained to high standard and accidents are infrequent but by the nature of qanitites serious ones get to happen. The worst of these are naturally fires, which are notoriously dangerous. Consider that many of single bore tunnels have length over 5km (and up to 24km). Some of them are undersea tunnels in the fjords with inclination of up to 10 degrees. There are no automatic firefighting facilities. These are costly both in installation and maintenance, and while they might work in a country with one or two tunnels total they simply do not scale up. Hence the policy follows the self evacuation principle: you're on your own to help yourself and others to egress, hopefully managing to follow the signage and lights before the smoke sets in and pray the extractor fans do their job.
 
-![In the tunnels](/images/loudest-lisp-program/gudvangatunnelen.jpg)
+![Aftermath of a fire](/images/loudest-lisp-program/gudvangatunnelen.jpg)
 
 So far Norway have been spared of mass casualty tunnel fires but there have been multiple close calls. One of particularly unlucky ones, the 11.5km long Gudvangatunnelen had experienced fires in span of a few years. Thus national Road Administration put forth a challenge to develop a system to augment self-assisted evacuation. [Norphonic](https://norphonic.com/), my employer, had won in a competition of nine contenders on the merits of our pre-existing R&D work. In late 2019 the project has officially started, and despite the setbacks of the pandemic concluded in 2021 with series production of the system now known as [Evacsound](https://evacsound.com/). The whole development on this project was done by a lean team of:
 
 * software engineer who could also do some mechanical design and basic electronics
 * electrical engineer who could also code
-* two project engineers, explaining us what is possible in terms of regulation and practices, taking care of SCADA integration and countless practicalities of automation systems for tunnels
+* two project engineers, dealing with product feasibility wrt regulation and practices, taking care of SCADA integration and countless practicalities of automation systems for tunnels
 * project coordinator who communicated the changes, requirements and arranged tests with the Road Administration and our subcontractors
 * logistics specialist ensuring the flow of hundreds of shipments back and forth on the peak of pandemic
 
 ![Live hacking](/images/loudest-lisp-program/wrp_node.jpg)
-*Our EE Wesley patching up a prototype live*
+*Wesley, our EE patching up a prototype live*
 
 Atop of this we were also hiring some brilliant MEs and EEs as contractors. In addition two of Norway's leading research institutes handled the science of validating psychoacoustics and simulating fire detecton.
 
@@ -50,13 +50,13 @@ A typical installation is a few dozen to several hundred nodes in a single tunne
 
 The hardware took nearly 20 design iterations until we reached what I would immodestly call the Platonic design for the problem. We were fortunate to have both mechanical and electronic design expertise from our [other products](https://norphonic.com/products/voip-phones-and-accessories/). That allowed us to iterate at an incredible pace. Our software stack has settled on Yocto Linux and Common Lisp. Why CL? That's what I started our earliest design studies with earlier. Deadlines were tight, requirements were fluid, the team was small and I can move in Common Lisp really, really fast. I like to think that am also a competent C programmer but it was clear doing it in C would be many times the effort.
 
-(iterations picture panel)
+![Design iterations](/images/loudest-lisp-program/iterations.jpg)
 
 Our pirmary CL implementation is Lispworks. There are some practical reasons for that.
 
 * Its tree shaker is really good. This allows our binaries to run on a system with 128 Mb RAM with room to spare, which at the scale of thousands devices manufactured helps keep the costs down.
 * It officially supports ARM32 with POSIX threads, something only it and CCL did at the time.
-* The garbage collector is very tunable.
+* The garbage collector is [very tunable](https://www.lispworks.com/documentation/lw80/lw/lw-garbage-collection-ug.htm).
 * There is commercial support available with implementors within the earshot. Not that we ended up using it much but the thought is soothing.
 
 We however do use CCL liberally in development and we employ SBCL/x86 in the tests matrix. Testing across the three implementations has found a few quirks on occasions.
@@ -135,8 +135,8 @@ This particular diverse but restricted set of patterns wasn't particularly well 
 What happens here is that previously generated plan is actualized with `FUSE-MEDIA-FILE` command for every entry. That command inherits several timing properties:
 
 * absolute `BASE-TIME` set here explicitly
-* `DELTA` that is set from the plan's pre-calculated time deltas
-* `TIME-TO-COMPLETE` (implicit here) which specifies expected command duration and is used to calculate value timeout for `COMMUNICATE`
+* `DELTA` offset which is set from the plan's pre-calculated time deltas
+* `TIME-TO-COMPLETE` (implicit here) which specifies expected command duration and is used to calculate composite timeout value for `COMMUNICATE`
 
 If any network failure occurs, a reply from the node times out or node reports a malfunction an according condition is signaled. This mechanism allows us to effectively partition distributed networked operation failures into cases conveniently guarded by HANDLER-BIND wrappers. For instance, a macro that just logs the faults and continues the operation can be defined simply as:
 
