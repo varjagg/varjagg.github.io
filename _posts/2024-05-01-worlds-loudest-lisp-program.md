@@ -4,9 +4,9 @@ title: The World's Loudest Lisp Program
 category: Lisp Psychoacoustics
 ---
 
-It is interesting that while I think of myself as a generalist developer the vast portion of my career has been towards embedded and systems programming. I'm firmly a Common Lisp guy at heart but embedded tech landscape is the entrenched realm of C sprinkled with some C++ and nowadays Rust. However I had incredible fortune to work for the last few years on a substantial embedded system project in Common Lisp.
+It is interesting that while I think of myself as a generalist developer the vast portion of my career has been towards embedded and systems programming. I'm firmly a Common Lisp guy at heart but embedded tech landscape is entrenched realm of C sprinkled with some C++ and nowadays Rust. However I had incredible fortune to work for the last few years on a substantial embedded system project in Common Lisp.
 
-The story starts in Western Norway, the world capital of tunnels with over 600 located in the area. Tunnels are equipped and maintained to high standard and accidents are infrequent but by the nature of quantities serious ones get to happen. The worst of these are naturally fires, which are notoriously dangerous. Consider that many of single bore tunnels have length over 5km (and up to 24km). Some of them are undersea tunnels in the fjords with inclination of up to 10 degrees. There are no automatic firefighting facilities. These are costly both in installation and maintenance, and while they might work in a country with one or two tunnels total they simply do not scale up. Hence the policy follows the self evacuation principle: you're on your own to help yourself and others to egress, hopefully managing to follow the signage and lights before the smoke sets in and pray the extractor fans do their job.
+The story starts in Western Norway, the world capital of tunnels with over 650 located in the area. Tunnels are equipped and maintained to high standard and accidents are infrequent but by the nature of quantities serious ones get to happen. The worst of these are naturally fires, which are notoriously dangerous. Consider that many of single bore tunnels have length over 5km (and up to 24km). Some of them are undersea tunnels in the fjords with inclination of up to 10 degrees. There are no automatic firefighting facilities. These are costly both in installation and maintenance, and while they might work in a country with one or two tunnels total they simply do not scale up. Hence the policy follows the self evacuation principle: you're on your own to help yourself and others to egress, hopefully managing to follow the signage and lights before the smoke sets in and pray the extractor fans do their job.
 
 ![Aftermath of a fire](/images/loudest-lisp-program/gudvangatunnelen.jpg)
 
@@ -21,7 +21,7 @@ So far Norway have been spared of mass casualty tunnel fires but there have been
 ![Live hacking](/images/loudest-lisp-program/wrp_node.jpg)
 *Wesley, our EE patching up a prototype live*
 
-Atop of this we were also hiring some brilliant MEs and EEs as contractors. In addition two of Norway's leading research institutes handled the science of validating psychoacoustics and simulating fire detection.
+Atop of this we were also hiring some brilliant MEs and EEs as contractors. In addition two Norway's leading research institutes handled the science of validating psychoacoustics and simulating fire detection.
 
 At this point the system is already installed or is being installed in 6 tunnels in Norway with another 8 tunnels to some 29km total on order. We certainly do need to step up our international marketing efforts though.
 
@@ -44,11 +44,11 @@ We decided to start our design from psychoacoustics end and let the dice fall fo
 
 ![Node dissected](/images/loudest-lisp-program/node_section.png)
 
-A typical installation is a few dozen to several hundred nodes in a single tunnel. Which brings us to the headline: at the rated 50W output per device, we have projects that easily amount to tens of kilowatts acoustic power in operation, all orchestrated by Lisp code.
+A typical installation is a few dozen to several hundred nodes in a single tunnel. Which brings us to the headline: we have projects that easily amount to tens of kilowatts acoustic power in operation, all orchestrated by Lisp code.
 
 # Tech stack
 
-The hardware took nearly 20 design iterations until we reached what I would immodestly call the Platonic design for the problem. We were fortunate to have both mechanical and electronic design expertise from our [other products](https://norphonic.com/products/voip-phones-and-accessories/). That allowed us to iterate at an incredible pace. Our software stack has settled on Yocto Linux and Common Lisp. Why CL? That's what I started our earliest design studies with earlier. Deadlines were tight, requirements were fluid, the team was small and I can move in Common Lisp really, really fast. I like to think that am also a competent C programmer but it was clear doing it in C would be many times the effort.
+The hardware took nearly 20 design iterations until we reached what I would immodestly call the Platonic design for the problem. We were fortunate to have both mechanical and electronic design expertise from our [other products](https://norphonic.com/products/voip-phones-and-accessories/). That allowed us to iterate at an incredible pace. Our software stack has settled on Yocto Linux and Common Lisp. Why CL? That's what I started our earliest design studies with earlier. Deadlines were tight, requirements were fluid, the team was small and I can move in Common Lisp really, really fast. I like to think that am also a competent C programmer but it was clear doing it in C would be many times the effort. And with native compilation there's no performance handicap to speak of, so it is hard to justify a rewrite later.
 
 ![Design iterations](/images/loudest-lisp-program/iterations.jpg)
 
@@ -69,7 +69,7 @@ At its heart Evacsound is a soft real time, distributed system where a central s
 2. The operations is completely unmanned. There are no SREs; nobody's on pager duty for the system. After commissioning there's typically no network access for vendors to the site anyway. The thing have to sit there on its own and quietly do its job for the next couple decades until the scheduled tunnel renovation.
 3. We have experience designing no-nonsense hardware that lasts: this is how we have repeat business with Siemens, GE and other big players. But with sheer scale of installation you can count on devices going dark over the years. There will be hardware faults, accidents and possible battle attrition from fires. Evacsound has to remain operational despite the damage, allow for redundant centrals and ensure zero configuration maintenance/replacement of the nodes.
 
-The first point has channeled us to using pre-uploaded audio rather than digital multicasting. This uses the network much more efficiently and helps to eliminate most synchronization issues. Remember that sound has to be timed accounting for propagation distances between the nodes, and 10 millisecond jitter gives you over 3 meters deviation. Then, the command and control structure should be flexible enough for executing elaborate plans involving sound and lighting effects yet tolerate inevitable misfortunes of real life.
+The first point has channeled us to using pre-uploaded audio rather than live streaming. This uses the network much more efficiently and helps to eliminate most synchronization issues. Remember that sound has to be timed accounting for propagation distances between the nodes, and 10 millisecond jitter gives you over 3 meters deviation. Then, the command and control structure should be flexible enough for executing elaborate plans involving sound and lighting effects yet tolerate inevitable misfortunes of real life.
 
 The system makes heavy use of CLOS with a smattering of macros in places where it makes a difference. Naturally there's a lot of moving parts in the product. We're not going into the details of SCADA interfacing, power and resource scheduling, fire detection, self calibration and node replacement subsystems. The system has also distinct PA mode and two way speech communication using a node as a giant speakerphone: these two also add a bit of complexity. Instead we're going to have an overview on the bits that make reliable distributed operation possible.
 
@@ -162,6 +162,6 @@ So the bird's eye view is,
 * we communicate in terms of objects naturally mapped from the problem domain
 * the communication is abstracted away into pseudo-transactional sets of distributed operations with error handling
 
-Altogether it combines into a robust mass-networked product that is able to thrive in the wild of industrial automation jungle.
+Altogether it combines into a robust distributed system that is able to thrive in the wild of industrial automation jungle.
 
 *TL;DR Helping people escape tunnel fires with Lisp and funny sounds*
