@@ -8,19 +8,20 @@ It is interesting that while I think of myself as a generalist developer the vas
 
 The story starts in Western Norway, the world capital of tunnels with over 600 located in the area. Tunnels are equipped and maintained to high standard and accidents are infrequent but by the nature of qanitites serious ones get to happen. The worst of these are naturally fires, which are notoriously dangerous. Consider that many of single bore tunnels have length over 5km (and up to 24km). Some of them are undersea tunnels in the fjords with inclination of up to 10 degrees. There are no automatic firefighting facilities. These are costly both in installation and maintenance, and while they might work in a country with one or two tunnels total they simply do not scale up. Hence the policy follows the self evacuation principle: you're on your own to help yourself and others to egress, hopefully managing to follow the signage and lights before the smoke sets in and pray the extractor fans do their job.
 
-(picture Gudvang fire)
+![In the tunnels](/images/loudest-lisp-program/gudvangatunnelen.jpg)
 
-So far Norway have been spared of mass casualty tunnel fires but there have been multiple close calls. One of particularly unlucky ones, the 11.5km long Gudvangatunnelen had experienced fires in the span ofe a few years. Thus national Road Administration put forth a programme to develop a system to augment self-assisted evacuation. [Norphonic](https://norphonic.com/), my employer, had won in a competition of nine contenders on the merits of its pre-existing R&D work. In late 2019 the project has officially started, and despite the setbacks of the pandemic concluded in 2021 with series production of the system now known as [Evacsound](https://evacsound.com/). The whole development on this project was done by a lean team of:
+So far Norway have been spared of mass casualty tunnel fires but there have been multiple close calls. One of particularly unlucky ones, the 11.5km long Gudvangatunnelen had experienced fires in span of a few years. Thus national Road Administration put forth a challenge to develop a system to augment self-assisted evacuation. [Norphonic](https://norphonic.com/), my employer, had won in a competition of nine contenders on the merits of our pre-existing R&D work. In late 2019 the project has officially started, and despite the setbacks of the pandemic concluded in 2021 with series production of the system now known as [Evacsound](https://evacsound.com/). The whole development on this project was done by a lean team of:
 
 * software engineer who could also do some mechanical design and basic electronics
-* electrical enginer who could also code
-* project engineer, taking care of SCADA integration and countless practicalities of equipment for tunnels
+* electrical engineer who could also code
+* two project engineers, explaining us what is possible in terms of regulation and practices, taking care of SCADA integration and countless practicalities of automation systems for tunnels
+* project coordinator who communicated the changes, requirements and arranged tests with the Road Administration and our subcontractors
 * logistics specialist ensuring the flow of hundreds of shipments back and forth on the peak of pandemic
 
 ![Live hacking](/images/loudest-lisp-program/wrp_node.jpg)
-*My colleague Wesley patching up a prototype live*
+*Our EE Wesley patching up a prototype live*
 
-Atop of this we were also hiring some brilliant MEs and EEs as contractors. Two of Norway's leading research institutes handled the science of validating psychoacoustics and simulating fire detecton.
+Atop of this we were also hiring some brilliant MEs and EEs as contractors. In addition two of Norway's leading research institutes handled the science of validating psychoacoustics and simulating fire detecton.
 
 At this point the system is already installed or is being installed in 6 tunnels in Norway with another 8 tunnels to some 29km total on order. We certainly do need to step up our international marketing efforts though.
 
@@ -41,7 +42,7 @@ In addition to above, the system should have still provided visual clues and all
 
 We decided to start our design from psychoacoustic end and let the dice fall for the rest. The primary idea was to evacuate people by aiding with directional sound signals. The mechanism was worked out together with SINTEF research institute who conducted live trials on general population. A combination of sound effect distance requirements and technical restrictions in the tunnel has led us to devices installed at 3m height along the wall at 25m intervals. Which was just as well, since it allowed both for application of acoustic energy in lest wasteful, reverberating way *and* provided sensible intervals for radiated heat detection.
 
-(picture node)
+![Node dissected](/images/loudest-lisp-program/node_section.png)
 
 A typical installation is a few dozen to several hundred nodes in a single tunnel. Which brings us to the headline: at the rated 50W output per device, we have projects that easily amount to tens of kilowatts acoustic power in operation, all orchestrated by Lisp code.
 
@@ -70,11 +71,13 @@ At its heart Evacsound is a soft real time, distributed system where a central s
 
 The first point has channeled us to using pre-uploaded audio rather than digital multicasting. This uses the network much more efficiently and helps to eliminate most synchronization issues. Remember that sound has to be timed accounting for propagation distances between the nodes, and 10 millisecond jitter gives you over 3 meters deviation. Then, the command and control structure should be flexible enough for executing elaborate plans involving sound and lighting effects yet tolerate inevitable misfortunes of real life.
 
-Overall the system makes heavy use of CLOS with a smattering of macros in places where it matters. Naturally there's a lot of moving parts in the system. We're not going to touch SCADA interfacing, power and resource scheduling, fire detection, self calibration and node replacement subsystems. The system has also distinct PA mode and two way speech communication using a node as a giant speakerphone: these two also add a bit of complexity. Instead we're going to have an overview on the bits that make reliable distributed operation possible.
+The system makes heavy use of CLOS with a smattering of macros in places where it makes a difference. Naturally there's a lot of moving parts in the product. We're not going into the details of SCADA interfacing, power and resource scheduling, fire detection, self calibration and node replacement subsystems. The system has also distinct PA mode and two way speech communication using a node as a giant speakerphone: these two also add a bit of complexity. Instead we're going to have an overview on the bits that make reliable distributed operation possible.
+
+![Test of fire detection](/images/loudest-lisp-program/fire_test.gif)
 
 ## Processes
 
-First step in establishing reliability baseline was to come up with abstraction for isolated tasks to be used both on the central and on the nodes. We built it on top of a threadpool, layering on topof it an execution abstration with start, stop and fault handlers. These tie in to a watchdog monitor process with straightforward decision logic. An Evacsound entity would run a service registry where a service instance would look along these lines:
+First step in establishing reliability baseline was to come up with abstraction for isolated tasks to be used both on the central and on the nodes. We built it on top of a threadpool, layering on top of it an execution abstration with start, stop and fault handlers. These tie in to a watchdog monitor process with straightforward decision logic. An Evacsound entity would run a service registry where a service instance would look along these lines:
 
 {% highlight lisp linenos %}
 (register-service site (make-instance 'avc-process :service-tag :avc
