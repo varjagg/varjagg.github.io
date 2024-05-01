@@ -40,7 +40,7 @@ Sound is more persistent, although there are numerous challenges to using it in 
 
 In addition to above, the system should have still provided visual clues and allow for distributed temperature sensing for fire detection. It has also to withstand pressure wash along the tunnel wall, necessitating IP69 approval.
 
-We decided to start our design from psychoacoustic end and let the dice fall for the rest. The primary idea was to evacuate people by aiding with directional sound signals. The mechanism was worked out together with SINTEF research institute who conducted live trials on general population. A combination of sound effect distance requirements and technical restrictions in the tunnel has led us to devices installed at 3m height along the wall at 25m intervals. Which was just as well, since it allowed both for application of acoustic energy in lest wasteful, reverberating way *and* provided sensible intervals for radiated heat detection.
+We decided to start our design from psychoacoustics end and let the dice fall for the rest. The primary idea was to evacuate people by aiding with directional sound signals. The mechanism was worked out together with SINTEF research institute who conducted live trials on general population. A combination of sound effect distance requirements and technical restrictions in the tunnel has led us to devices installed at 3m height along the wall at 25m intervals. Which was just as well, since it allowed both for application of acoustic energy in lest wasteful, reverberating way *and* provided sensible intervals for radiated heat detection.
 
 ![Node dissected](/images/loudest-lisp-program/node_section.png)
 
@@ -81,10 +81,10 @@ First step in establishing reliability baseline was to come up with abstraction 
 
 {% highlight lisp linenos %}
 (register-service site (make-instance 'avc-process :service-tag :avc
-					:closure 'avc-execution
-					:suspend-action 'avc-suspend
-					:resume-action 'avc-resume
-					:process-name "Automatic Volume Control"))
+				      :closure 'avc-execution
+				      :suspend-action 'avc-suspend
+				      :resume-action 'avc-resume
+				      :process-name "Automatic Volume Control"))
 {% endhighlight %}
 
 …and the methods that would be able to spin, quit, pause or resume the process based on its `service-tag`. This helps us ensure that we don't ever end up with a backtrace or with an essential process quietly knocked out.
