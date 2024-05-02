@@ -124,7 +124,7 @@ It is established wisdom now that multiple inheritance is an anti-pattern, not w
 
 The next essential task is communication. Depending on the plan we may communicate with all or subsets of nodes, in particular sequence or simultaneously, synchronously or async, with or without expectation of reported results. For instance we may want to get a noise estimation from microphones for volume control, and that would need to be done for all nodes at once while expecting a result set or reports. A PA message would have to be played synchronized but the result does not really matter. Or a temperature change notice may arrive unprompted to be considered by fire detection algorithm.
 
-This particular diverse but restricted set of patterns wasn't particularly well treated by existing frameworks and libraries, so we rolled our own on top of socket library, POSIX threads and condition variables. Our small DSL has two basic constructs, the asynchronous `communicate>` for outgoing commands and `communicate<` for expecting the result set, which can be composed as one operation `communicate`. A system can generate distributed command such as
+This diverse but restricted set of patterns wasn't particularly well treated by existing frameworks and libraries, so we rolled our own on top of socket library, POSIX threads and condition variables. Our small DSL has two basic constructs, the asynchronous `communicate>` for outgoing commands and `communicate<` for expecting the result set, which can be composed as one operation `communicate`. A system can generate distributed command such as
 
 {% highlight lisp %}
 (communicate (actualize-plan
