@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The World's Loudest Lisp Program
+title: The World's Loudest Lisp Program to the Rescue
 category: Lisp Psychoacoustics
 ---
 
