@@ -52,7 +52,7 @@ The hardware took nearly 20 design iterations until we reached what I would immo
 
 ![Design iterations](/images/loudest-lisp-program/iterations.png)
 
-Our primary CL implementation is Lispworks. There are some practical reasons for that.
+Our primary CL implementation is [LispWorks](https://www.lispworks.com). There are some practical reasons for that.
 
 * Its tree shaker is really good. This allows our binaries to run on a system with 128 Mb RAM with room to spare, which at the scale of thousands devices manufactured helps keep the costs down.
 * It officially supports ARM32 with POSIX threads, something only it and CCL did at the time.
@@ -118,7 +118,7 @@ Generated plans are sets of node ID, effect direction and time delta tuples. The
 
 The central and nodes communicate in terms of CLOS instances of classes comprising the command language. In simplest cases they have just the slots to pass values on for the commands to be executed immediately. However with appropriate mixin they can inherit the properties necessary for precision timing control, allowing the commands to be executed in time synchronized manner across sets of nodes in plans.
 
-It is established wisdom now that multiple inheritance is an anti-pattern, not worth the headache in the long run. However Evacsound make extensive use of it and over the years it worked out just fine. I'm not quite sure what the mechanism is that makes it click. Whether it's because CLOS doesn't suffer from diamond problem, or because typical treatment of the objects using multiple dispatch methods, or something else it really is a non-issue and is a much better abstraction mechanism than composition.
+It is established wisdom now that multiple inheritance is an anti-pattern, not worth the headache in the long run. However Evacsound make extensive use of it and over the years it worked out just fine. I'm not quite sure what the mechanism is that makes it click. Whether it's because CLOS doesn't suffer from diamond problem, or because typical treatment of objects using multiple dispatch methods, or something else it really is a non-issue and is a much better abstraction mechanism than composition.
 
 ## Communication
 
