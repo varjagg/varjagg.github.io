@@ -29,13 +29,13 @@ At this point the system is already installed or is being installed in 6 tunnels
 
 # The Concept
 
-How do you approach a problem like this? The only thing that can be improved under self-evacuation is the flow of information towards people in emergency. This leaves us with eyesight and hearing to work with. Visual aids are greatly more flexible and easy to work with. However their huge drawback is their usefulness expires quickly once the smoke sets in.
+How do you approach a problem like this? The only thing that can be improved under self-evacuation is the flow of information towards people in emergency. This leaves us with eyesight and hearing to work with. Visual aids are greatly more flexible and easy to control. However their huge drawback is their usefulness expires quickly once the smoke sets in.
 
 Sound is more persistent, although there are numerous challenges to using it in the tunnels:
 
 * The background noise from smoke extraction fans can be very high, and if you go for speech the threshold for intelligibility has to be at least 10dB over the noise floor
 * Public announcement messages alone are not very efficient. They are great in the early phase of fire to give heads up to evacuate, but kind of useless once the visibility is limited. At that point you also know you are in trouble already.
-* Speech announcements rely on comprehension of the language. In one of Gudvangatunnelen fires a bus full of foreign tourists who spoke neither Norwegian nor English has been caught in the thick of it. Fortunately a local lorry driver stopped by to collect them.
+* Speech announcements rely on comprehension of the language. In one of Gudvangatunnelen fires a bus full of foreign tourists who spoke neither English nor Norwegian had been caught in the thick of it. Fortunately a local lorry driver stopped by to collect them.
 * Acoustic environment in tunnels ranges from poor to terrible. Echo of 4-5 seconds in mid-range frequencies is rather typical. 
 
 In addition to above, the system should have still provided visual clues and allow for distributed temperature sensing for fire detection. It has also to withstand pressure wash along the tunnel wall, necessitating IP69 approval. On a tangent IP69 is 100 bar 80C water jet pressure at 18 cm distance for 3 minutes, so Evacsound is of the most water protected speaker systems in the world.
