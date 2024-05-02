@@ -116,9 +116,9 @@ Generated plans are sets of node ID, effect direction and time delta tuples. The
 
 ## Command Language
 
-The central and nodes communicate in terms of CLOS instances of the classes comprising the command language. In simplest cases they have just the slots to pass values on for the commands to be executed immediately. However with appropriate mixin they can inherit the properties necessary for precision timing control, allowing the commands to be executed in time synchronized manner across sets of nodes in plans.
+The central and nodes communicate in terms of CLOS instances of classes comprising the command language. In simplest cases they have just the slots to pass values on for the commands to be executed immediately. However with appropriate mixin they can inherit the properties necessary for precision timing control, allowing the commands to be executed in time synchronized manner across sets of nodes in plans.
 
-It is established wisdom now that multiple inheritance is an anti-pattern, not worth the headache in the long run. However Evacsound make extensive use of it and over the years it worked out just fine. I'm not quite sure what the mechanism is that makes it click. Whether it's because CLOS doesn't suffer from diamond problem, or because typical treatment of the objects using multiple dispatch methods, or something else it really is a non-issue and is a much better abstraction mechanism than containment.
+It is established wisdom now that multiple inheritance is an anti-pattern, not worth the headache in the long run. However Evacsound make extensive use of it and over the years it worked out just fine. I'm not quite sure what the mechanism is that makes it click. Whether it's because CLOS doesn't suffer from diamond problem, or because typical treatment of the objects using multiple dispatch methods, or something else it really is a non-issue and is a much better abstraction mechanism than composition.
 
 ## Communication
 
