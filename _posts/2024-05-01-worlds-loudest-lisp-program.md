@@ -1,7 +1,7 @@
 ---
 layout: post
 title: The World's Loudest Lisp Program to the Rescue
-category: Lisp Psychoacoustics
+category: Lisp
 ---
 
 It is interesting that while I think of myself as a generalist developer the vast portion of my career has been towards embedded and systems programming. I'm firmly a Common Lisp guy at heart but embedded tech landscape is the entrenched realm of C sprinkled with some C++ and nowadays Rust. However I had incredible fortune to work for the last few years on a substantial embedded system project in Common Lisp.
