@@ -9,7 +9,7 @@ permalink: /the-marketing-megabyte/
 or over half a terabyte."* --- Apple Inc.
 </div>
 
-It was the early 1990s. Hard drive manufacturers fought hard for coming up ever larger devices, pushing to the coveted gigabyte boundary. At some point they got enough platter density in consumer grade devices to haul over a billion bytes. One problem: the industry convention was that kilo-, mega-, and gigabytes were all power of two units. That made them some 74 million bytes short of the coveted boundary.
+It was the early 1990s. Hard drive manufacturers fought hard for coming up ever larger devices, pushing to the coveted gigabyte boundary. At some point they got enough platter density in consumer grade devices to haul over a billion bytes. There was one problem: the industry convention was that kilo-, mega-, and gigabytes were all power of two units. That made them some 74 million bytes short of the coveted boundary.
 
 Not that it stopped them from advertising their disks as gigabyte devices. Thus the Marketing Megabyte was born.
 
