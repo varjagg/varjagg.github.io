@@ -27,4 +27,4 @@ So let me sum it up here for the next time this issue inevitably flares on the u
 
 - Kibi-, mebi-, and gibi- prefixes sounds patently silly. I have lost count of engineers who either chose to ignore them or can't say them aloud without embarrassed smile. They could make great cartoon character names though.
 
-*tl;dr kicking a dead horse*
+*tl;dr beating a dead horse*
