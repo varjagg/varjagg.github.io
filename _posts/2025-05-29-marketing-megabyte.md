@@ -17,6 +17,8 @@ Engineers were understandably pissed, and consumers eventually started to notice
 
 So let me sum it up here for the next time this issue inevitably flares on the usual tech aggregator websites:
 
+- Raison d'être for the change was the compulsion to lie to the customers without liability.
+
 - Greek prefixes kilo- and mega- refer to sharp thousand and million respectively. How important it was after decades of established use in the industry however is unclear. To a non-technical user it makes no difference as long as the unit is used consistently. To a computer engineer, Marketing Megabytes are largely unusable. Either way, the proposed substitution acronyms kibi-, mebi- and so on in culmination of circular reasoning still use the same Greek prefixes.
 
 - Binary computers address memory in powers of two. This makes the power of two KB/MB/GB a natural measurement unit. To the day it's impossible to buy a memory chip with capacity in round number of Marketing Megabytes because it simply doesn't make sense.
