@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Evacsound Site Editor</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": { "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <div id="info">
+    Orbit/zoom · Shift+↑/↓ walk · Click select · ⌫ delete
+    <input id="findNode" type="text" placeholder="find node…"
+           style="margin-left:8px;width:150px;background:#000;border:1px solid #0f0;color:#0f0;font:0.9rem monospace;pointer-events:auto;">
+  </div>
+  <div id="splash">
+    Evacsound site configurator. Connecting to the site suspends normal operation. Click to connect
+  </div>
+  <script type="module" src="scripts/main.js"></script>
+</body>
+</html>
