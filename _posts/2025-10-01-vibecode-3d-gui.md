@@ -17,7 +17,7 @@ This was also the first production project where I decided to give AI a shot, no
 The resulting code as far as I can judge is mediocre but not terrible. There is a panel of tests for most of functionality and a number of generated documents. The demo you can see below, or as a stand-alone version [here](). Use mouse to orbit and select elements. The elements can be added on zigzag spacers using the buttons in the upper row or by pressing Enter if you want a node. They can be deleted with Del or Backspace.
 
 <iframe src="{{ '/assets/evedemo/index.html' | relative_url }}"
-        style="width:100%;height:500px;border:1px solid #ccc;">
+        style="width:100%;height:800px;border:1px solid #ccc;">
 </iframe>
 
 So this was an interesting experience. There's some debate how true the metrics are but I honestly think the AI allowed me to move much faster than I could otherwise. What does that spell for our trade, job prospects, junior pipeline and enjoyment of our craft is perhaps best left for a separate post. For now let me summarize my practical AI process experience thus far into Eugene's Eightfold Path:
