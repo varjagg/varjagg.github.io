@@ -11,7 +11,7 @@ import { OrbitControls }     from 'https://cdn.jsdelivr.net/npm/three@0.160.0/ex
 import { site, cfg, gap } from './model.js';
 import { DEFAULT_DISTANCE_METERS, DEFAULT_DELAY_NS } from './constants.js';
 import { delayToMeters } from './units.js';
-import { playTransitionSound } from './sound.js';
+import { playTransitionSound, warmTransitionSound } from './sound.js';
 
 /* reference to the main extent is obtained via site.rootExtent() */
 
@@ -562,6 +562,8 @@ export function pick (e) {
 
 /* ──────────────────────────────────────────────────────────────
    • initial build + animate */
+warmTransitionSound().catch(()=>{});
+
 if (!site.deferInitialBuild) {
   build();
   playTransitionSound();
