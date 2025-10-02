@@ -24,37 +24,170 @@ export const site = {
 
   /* zones can be referenced by zone-markers */
   zones : [
-    { id:'Zone-A' },
-    { id:'Zone-B' }
+    { id:'Main' },
+    { id:'Evacuation' },
+    { id:'Utility' }
   ],
 
   /* main extent lives in the leftExtent of this top-level joint */
   joint : {
     type:'joint',
-    delayOut:0, delayIn:0,
+    delayOut:0,
+    delayIn:0,
     attached:true,
     egress:false,
     directionRight:false,
     reversed:false,
     leftExtent:[
       { reverse:false },
-      /* node 0 */   { type:'node',
-                      id:'10:45:be:00:01:00', capabilities:CAP_MICROPHONE, delayRight:DEFAULT_DELAY_NS },
-
-      /* marker */   { type:'marker',
-                      leftZone:'Zone-A', rightZone:'Zone-B' },
-
-      /* node 1 */   { type:'node',
-                      id:'10:45:be:00:01:01', capabilities:CAP_SPEAKER_LEFT, delayRight:DEFAULT_DELAY_NS },
-
-      /* joint */   { type:'joint',
-                      delayOut:DEFAULT_DELAY_NS, delayIn:DEFAULT_DELAY_NS, attached:false, egress:false,
-                      directionRight:false,
-                      reversed:false,
-                      leftExtent:[{ reverse:false }], rightExtent:[{ reverse:false }] },
-
-      /* node 3 */   { type:'node',
-                      id:'10:45:be:00:01:03', capabilities:0, delayRight:null }   // last node
+      { type:'marker', leftZone:'', rightZone:'Main' },
+      { type:'node', id:'10:45:be:00:01:00', capabilities:CAP_MICROPHONE, delayRight:88235294, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:01', capabilities:CAP_SPEAKER_LEFT, delayRight:29411765, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:02', capabilities:CAP_SPEAKER_RIGHT, delayRight:79411765, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:03', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:76470588, evacpoint:false },
+      {
+        type:'joint',
+        delayOut:79411765,
+        delayIn:79411765,
+        attached:false,
+        egress:true,
+        directionRight:false,
+        reversed:false,
+        leftExtent:[
+          { reverse:false },
+          { type:'node', id:'10:45:be:00:01:10', capabilities:CAP_SPEAKER_RIGHT, delayRight:58823529, evacpoint:true },
+          { type:'node', id:'10:45:be:00:01:11', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:55882353, evacpoint:false },
+          {
+            type:'joint',
+            delayOut:70588235,
+            delayIn:64705882,
+            attached:false,
+            egress:false,
+            directionRight:false,
+            reversed:false,
+            leftExtent:[
+              { reverse:false },
+              { type:'node', id:'10:45:be:00:01:07', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:52941176, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:08', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:58823529, evacpoint:false },
+              {
+                type:'joint',
+                delayOut:55882353,
+                delayIn:55882353,
+                attached:false,
+                egress:false,
+                directionRight:false,
+                reversed:false,
+                leftExtent:[
+                  { reverse:false },
+                  { type:'node', id:'10:45:be:00:01:04', capabilities:CAP_MICROPHONE, delayRight:50000000, evacpoint:false },
+                  { type:'marker', leftZone:'Main', rightZone:'' }
+                ],
+                rightExtent:[ { reverse:true } ]
+              },
+              { type:'node', id:'10:45:be:00:01:09', capabilities:CAP_MICROPHONE, delayRight:61764706, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:0a', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:54411765, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:0b', capabilities:0, delayRight:null, evacpoint:false },
+              { type:'marker', leftZone:'Main', rightZone:'' }
+            ],
+            rightExtent:[ { reverse:false } ]
+          },
+          { type:'node', id:'10:45:be:00:01:12', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:67647059, evacpoint:false },
+          {
+            type:'joint',
+            delayOut:61764706,
+            delayIn:61764706,
+            attached:false,
+            egress:false,
+            directionRight:true,
+            reversed:false,
+            leftExtent:[ { reverse:false } ],
+            rightExtent:[
+              { reverse:true },
+              { type:'node', id:'10:45:be:00:01:0c', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:70588235, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:0d', capabilities:CAP_MICROPHONE, delayRight:67647059, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:0e', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:64705882, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:0f', capabilities:0, delayRight:null, evacpoint:false },
+              { type:'marker', leftZone:'Main', rightZone:'' }
+            ]
+          },
+          { type:'node', id:'10:45:be:00:01:13', capabilities:CAP_MICROPHONE, delayRight:61764706, evacpoint:false },
+          { type:'node', id:'10:45:be:00:01:14', capabilities:0, delayRight:null, evacpoint:false },
+          { type:'marker', leftZone:'Main', rightZone:'' }
+        ],
+        rightExtent:[ { reverse:false } ]
+      },
+      { type:'node', id:'10:45:be:00:01:15', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:73529412, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:16', capabilities:0, delayRight:88235294, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:17', capabilities:CAP_MICROPHONE, delayRight:70588235, evacpoint:false },
+      {
+        type:'joint',
+        delayOut:76470588,
+        delayIn:70588235,
+        attached:false,
+        egress:false,
+        directionRight:true,
+        reversed:false,
+        leftExtent:[ { reverse:false } ],
+        rightExtent:[
+          { reverse:false },
+          { type:'node', id:'10:45:be:00:01:1b', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:64705882, evacpoint:false },
+          {
+            type:'joint',
+            delayOut:58823529,
+            delayIn:52941176,
+            attached:false,
+            egress:false,
+            directionRight:false,
+            reversed:false,
+            leftExtent:[
+              { reverse:false },
+              { type:'node', id:'10:45:be:00:01:18', capabilities:0, delayRight:29411765, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:19', capabilities:CAP_MICROPHONE, delayRight:55882353, evacpoint:false },
+              { type:'node', id:'10:45:be:00:01:1a', capabilities:0, delayRight:null, evacpoint:false },
+              { type:'marker', leftZone:'Main', rightZone:'' }
+            ],
+            rightExtent:[ { reverse:false } ]
+          },
+          { type:'node', id:'10:45:be:00:01:1c', capabilities:CAP_MICROPHONE, delayRight:61764706, evacpoint:false },
+          { type:'node', id:'10:45:be:00:01:1d', capabilities:CAP_SPEAKER_LEFT, delayRight:70588235, evacpoint:false },
+          { type:'node', id:'10:45:be:00:01:1e', capabilities:CAP_SPEAKER_RIGHT, delayRight:67647059, evacpoint:false },
+          { type:'node', id:'10:45:be:00:01:1f', capabilities:0, delayRight:null, evacpoint:false },
+          { type:'marker', leftZone:'Main', rightZone:'' }
+        ]
+      },
+      { type:'node', id:'10:45:be:00:01:20', capabilities:0, delayRight:29411765, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:21', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:67647059, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:22', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:64705882, evacpoint:false },
+      {
+        type:'joint',
+        delayOut:67647059,
+        delayIn:67647059,
+        attached:false,
+        egress:false,
+        directionRight:false,
+        reversed:false,
+        leftExtent:[
+          { reverse:true },
+          { type:'node', id:'10:45:be:00:01:23', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:67647059, evacpoint:false },
+          { type:'node', id:'10:45:be:00:01:24', capabilities:CAP_MICROPHONE, delayRight:61764706, evacpoint:false },
+          { type:'node', id:'10:45:be:00:01:25', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:58823529, evacpoint:false },
+          { type:'node', id:'10:45:be:00:01:26', capabilities:0, delayRight:null, evacpoint:false },
+          { type:'marker', leftZone:'Main', rightZone:'' }
+        ],
+        rightExtent:[ { reverse:false } ]
+      },
+      { type:'node', id:'10:45:be:00:01:27', capabilities:0, delayRight:88235294, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:28', capabilities:CAP_SPEAKER_LEFT, delayRight:61764706, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:29', capabilities:0, delayRight:29411765, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:2a', capabilities:CAP_TEMPERATURE_SENSOR_MAST_TOP, delayRight:70588235, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:2b', capabilities:CAP_MICROPHONE, delayRight:67647059, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:2c', capabilities:0, delayRight:88235294, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:2d', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:64705882, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:2e', capabilities:0, delayRight:29411765, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:2f', capabilities:CAP_DICHROMATIC_LIGHTS, delayRight:61764706, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:30', capabilities:CAP_MICROPHONE, delayRight:88235294, evacpoint:false },
+      { type:'node', id:'10:45:be:00:01:31', capabilities:0, delayRight:null, evacpoint:false },
+      { type:'marker', leftZone:'Main', rightZone:'' }
     ],
     rightExtent:null
   },

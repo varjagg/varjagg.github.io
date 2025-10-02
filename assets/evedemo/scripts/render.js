@@ -23,6 +23,7 @@ export const renderer  = new THREE.WebGLRenderer({ antialias: true });
 
 export const controls  = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
+controls.enableZoom = false;
 controls.minDistance = 2;
 controls.maxDistance = 2000;
 /* root group for all dynamic geometry */

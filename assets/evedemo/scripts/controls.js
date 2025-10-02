@@ -28,6 +28,12 @@ let histIdx = -1;
 export const FLY_ACCEL = 0.05;
 export const FLY_MAX_SPEED = 2.0;
 let flyData = null;
+const WHEEL_TRANSLATE_SENSITIVITY = 0.008;
+const KEY_WALK_STEP = 4;
+let addRow = null;
+let addBtn = null;
+let markerBtn = null;
+let jointBtn = null;
 function pushHistory(doFn, undoFn, label = ''){
   history.splice(histIdx+1);
   history.push({doFn, undoFn, label});
@@ -177,9 +183,10 @@ function clearSelection () {
   // owning extent and index (works for main and side extents)
   sel.extent = sel.localIdx = null;
 
-  addBtn.style.display    =
-  jointBtn.style.display  =
-  markerBtn.style.display =
+  if(addRow) addRow.style.display = 'none';
+  if(addBtn) addBtn.style.display = 'none';
+  if(jointBtn) jointBtn.style.display = 'none';
+  if(markerBtn) markerBtn.style.display = 'none';
   nodeDlg.style.display   =
   markDlg.style.display   =
   siteDlg.style.display   = 'none';
@@ -187,29 +194,30 @@ function clearSelection () {
 
 /* ──────────────────────────────────────────────────────────────
    ‣ Buttons                                                     */
-const addBar = document.createElement('div');
-addBar.style.cssText = `
-  position:fixed; top:10px; left:50%; transform:translateX(-50%);
-  display:flex; gap:6px;
-`;
-document.body.appendChild(addBar);
-
-const addBtn    = makeButton('Add node'  , 0, addNodeAtBreak, 'center', addBar);
-const markerBtn = makeButton('Add marker', 0, addMarkerAtBreak, 'center', addBar);
-const jointBtn  = makeButton('Add joint' , 0, addJointAtBreak, 'center', addBar);
-
 const viewCtrlBar = document.createElement('div');
 viewCtrlBar.style.cssText = `
   position:fixed; top:40px; left:10px;
-  display:flex; gap:6px; align-items:center;
+  display:flex; flex-direction:column; gap:6px; align-items:flex-start;
   z-index:5;
 `;
 document.body.appendChild(viewCtrlBar);
 
-const resetBtn  = makeButton('Reset view', 0, resetCam, 'left', viewCtrlBar);
-const undoBtn   = makeButton('Undo', 0, () => { undoHist(); clearSelection(); build(true); updateHistButtons(); }, 'left', viewCtrlBar);
-const redoBtn   = makeButton('Redo', 0, () => { redoHist(); clearSelection(); build(true); updateHistButtons(); }, 'left', viewCtrlBar);
+const mainCtrlRow = document.createElement('div');
+mainCtrlRow.style.cssText = 'display:flex; gap:6px; align-items:center;';
+viewCtrlBar.appendChild(mainCtrlRow);
+
+const resetBtn  = makeButton('Reset view', 0, resetCam, 'left', mainCtrlRow);
+const undoBtn   = makeButton('Undo', 0, () => { undoHist(); clearSelection(); build(true); updateHistButtons(); }, 'left', mainCtrlRow);
+const redoBtn   = makeButton('Redo', 0, () => { redoHist(); clearSelection(); build(true); updateHistButtons(); }, 'left', mainCtrlRow);
 [resetBtn, undoBtn, redoBtn].forEach(btn => { btn.style.display = ''; });
+
+addRow = document.createElement('div');
+addRow.style.cssText = 'display:none; gap:6px;';
+viewCtrlBar.appendChild(addRow);
+
+addBtn    = makeButton('Add node'  , 0, addNodeAtBreak, 'center', addRow);
+markerBtn = makeButton('Add marker', 0, addMarkerAtBreak, 'center', addRow);
+jointBtn  = makeButton('Add joint' , 0, addJointAtBreak, 'center', addRow);
 
 function setHistoryButtonState(btn, enabled) {
   btn.disabled = !enabled;
@@ -256,11 +264,14 @@ if(searchInput){
 
 /* ──────────────────────────────────────────────────────────────
    ‣ Camera flight helper                                        */
-function startFly(destPos, destTgt){
+function startFly(destPos, destTgt, initialSpeed = null){
+  const baseSpeed = typeof initialSpeed === 'number'
+    ? Math.max(0, Math.min(initialSpeed, FLY_MAX_SPEED))
+    : (flyData ? flyData.speed : 0);
   flyData = {
     destPos,
     destTgt,
-    speed: 0
+    speed: baseSpeed
   };
   requestAnimationFrame(flyStep);
 }
@@ -909,6 +920,59 @@ document.addEventListener('pointerdown',e=>{
   if(!siteDlg.contains(e.target) && e.target!==siteBtn) siteDlg.style.display='none';
 },{capture:true});
 
+function normalizeWheelDelta(evt){
+  if(evt.deltaMode === 1) return evt.deltaY * 16;
+  if(evt.deltaMode === 2) return evt.deltaY * 400;
+  return evt.deltaY;
+}
+
+function planarForwardVector(){
+  const forward = controls.target.clone().sub(camera.position);
+  forward.y = 0;
+  if(forward.lengthSq() < 1e-8){
+    camera.getWorldDirection(forward);
+    forward.y = 0;
+  }
+  if(forward.lengthSq() < 1e-8){
+    forward.set(0, 0, -1);
+  }
+  return forward.normalize();
+}
+
+function planarRightVector(forwardVec){
+  const right = forwardVec.clone().cross(camera.up);
+  right.y = 0;
+  if(right.lengthSq() < 1e-8){
+    right.set(1, 0, 0);
+  }
+  return right.normalize();
+}
+
+function translateCamera(delta, smooth = false){
+  if(delta.lengthSq && delta.lengthSq() < 1e-12) return;
+  if(smooth){
+    const destPos = camera.position.clone().add(delta);
+    const destTgt = controls.target.clone().add(delta);
+    startFly(destPos, destTgt);
+    return;
+  }
+  camera.position.add(delta);
+  controls.target.add(delta);
+  controls.update();
+}
+
+renderer.domElement.addEventListener('wheel', e => {
+  const raw = normalizeWheelDelta(e);
+  if(raw === 0) return;
+  e.preventDefault();
+
+  if(flyData) flyData = null;
+
+  const forward = planarForwardVector();
+  const shift = forward.multiplyScalar(-raw * WHEEL_TRANSLATE_SENSITIVITY);
+  translateCamera(shift, false);
+}, { passive:false });
+
 /* ──────────────────────────────────────────────────────────────
    ‣ Pointer picking (node / marker / break)                     */
 renderer.domElement.addEventListener('pointerdown', e => {
@@ -959,6 +1023,7 @@ renderer.domElement.addEventListener('pointerdown', e => {
     clearSelection();
     sel.break = info.breakIdx;
     highlightBreak(info.breakIdx, true);
+    addRow.style.display = 'flex';
     addBtn.style.display = jointBtn.style.display = markerBtn.style.display = '';
   }
 });
@@ -1155,11 +1220,25 @@ window.addEventListener('keydown',e=>{
     }
   }
 
-  /* Shift + ↑ / ↓ – walk camera */
-  if(e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey){
-    const step = 4;
-    if(e.code==='ArrowUp'  ){ camera.position.z-=step; controls.target.z-=step; e.preventDefault(); }
-    if(e.code==='ArrowDown'){ camera.position.z+=step; controls.target.z+=step; e.preventDefault(); }
+  /* WASD – walk / strafe camera */
+  if(!e.ctrlKey && !e.altKey && !e.metaKey){
+    const active = document.activeElement;
+    const tag = active?.tagName?.toUpperCase();
+    const typing = active?.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+    if(!typing){
+      const key = e.key.toLowerCase();
+      const forward = planarForwardVector();
+      const right = planarRightVector(forward);
+      let shift = null;
+      if(key === 'w') shift = forward.clone().multiplyScalar(KEY_WALK_STEP);
+      else if(key === 's') shift = forward.clone().multiplyScalar(-KEY_WALK_STEP);
+      else if(key === 'd') shift = right.clone().multiplyScalar(KEY_WALK_STEP);
+      else if(key === 'a') shift = right.clone().multiplyScalar(-KEY_WALK_STEP);
+      if(shift){
+        e.preventDefault();
+        translateCamera(shift, true);
+      }
+    }
   }
 });
 
