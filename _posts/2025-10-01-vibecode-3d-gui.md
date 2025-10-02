@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Vibecoding a 3D GUI for System Commissioning
-category: LLM
+category: AI
 permalink: /3d-commissioning-gui/
 ---
 Frontend development is terrifying. I know a number of superb frontend developers and admire their work but the ecosystem, the churn, and the focus around human end user experience are all positively intimidating. So ideally for an occasional UI project we would just hire consultants. Sometimes though the stars alinged so I was pressed to do Web UIs but they all were minor specialty projects.
