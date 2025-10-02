@@ -25,7 +25,7 @@ There are also visual aids:
 * Spans, the line along an extent of nodes labeled with distances.
 * Spacers, seen as zigzags between connexions or chevrons on the sides of joints. Selecting these allows you to add connexion elements via transient buttons. Their other function is to represent the contraction of tunnel length: plotting the tunnel to scale would have made for extremely long walks in a very sparse model. Spacers expand and contract in relation to the distance between the nodes.
 
-You can try it on the demo below, or as a stand-alone version [here](/assets/evedemo/index.html). Use mouse to orbit and select elements. Zoom wheel or gesture advances the camera. The elements can be added on zigzag spacers using the buttons in the upper row or by pressing Enter if you want a node. They can be deleted with Del or Backspace. Naturally it is not connected to any backend and all communication logic is omitted.
+You can try it on the demo below, or as a stand-alone version [here](/assets/evedemo/index.html). Use mouse to orbit and select elements. Zoom wheel or gesture advances the camera. The elements can be added on zigzag spacers using the buttons in the upper row or by pressing Enter if you want a node. They can be deleted with Del or Backspace. Naturally it is not connected to any backend and all communication logic is omitted. You can also fly to the node you want by entering a part of its UID in the search field on the top.
 
 <iframe src="{{ '/assets/evedemo/index.html' | relative_url }}"
         style="width:100%;height:800px;border:1px solid #ccc;">
