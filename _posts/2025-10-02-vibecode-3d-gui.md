@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Vibecoding a 3D GUI for System Commissioning
+title: Vibecoding a Cyberpunk 3D GUI for System Commissioning
 category: AI
 permalink: /3d-commissioning-gui/
 ---
