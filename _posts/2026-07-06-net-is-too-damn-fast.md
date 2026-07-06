@@ -30,6 +30,8 @@ Simplifying it quite a bit the ~S~ side looked something like this:
 
 You see now what was happening: `S` was sending the command, `R` processing it, sending the reply and `S` handling the reply *before* the bookkeeping of outbox process would record the command. Then the response wouldn't match anything and be discarded as orphaned. Later the inbox would timeout the command (not shown).
 
+The bookkeeping wasn't even that heavyweight: just storing some structures and perhaps couple expensive calls to set up a condition variable but that was enough.
+
 Naturally any kind of latency (be it due to network load or extraneous syslog calls) would alleviate that. The fix was to make the code inelegant but correct by registering the command before the send attempt and un-registering in the event of failure.
 
 *tl;dr a network can be way too fast*
