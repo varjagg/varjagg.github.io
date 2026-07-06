@@ -21,7 +21,8 @@ Simplifying it quite a bit the ~S~ side looked something like this:
 
 (defun handle-inbox (socket)
   (let ((reply (receive-incoming socket))
-	(corresponding-command (command-awaiting-response response)))
+	(corresponding-command
+	  (command-awaiting-response response)))
     (when corresponding-command
       (process-reply-for-command command response))))
 
