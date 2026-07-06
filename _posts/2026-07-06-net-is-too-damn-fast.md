@@ -24,6 +24,8 @@ Simplifying it quite a bit the ~S~ side looked something like this:
 	(corresponding-command (command-awaiting-response response)))
     (when corresponding-command
       (process-reply-for-command command response))))
+
+
 {% endhighlight %}
 
 You see now what was happening: ~S~ was sending the command, ~R~ processing it, sending the reply and ~S~ handling the reply *before* the bookkeeping of outbox process would record the command. Then the response wouldn't match anything and be discarded as orphaned. Later the inbox would timeout the command (not shown).
