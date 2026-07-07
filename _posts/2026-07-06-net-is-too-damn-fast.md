@@ -5,11 +5,11 @@ category: Lisp
 ---
 Recently I stumbled on a funny kind of race in distributed systems. I believe even the [classic texts](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing) don't cover that.
 
-So say we have a system `S` sending commands to a receiver `R` over network. `S` maintains network outbox and inbox handled by separate threads. A command is expected to complete with certain result sent back before the deadline, or else `S` would assume a request timed out. Quite basic so far.
+Say we have a system `S` sending commands to a receiver `R` over network. `S` maintains network outbox and inbox handled by separate threads. A command is expected to complete with certain result sent back before the deadline, or else `S` would assume a request timed out. Very basic so far.
 
 However a certain class of commands (and only it) was timing out. They would fail regularly on some networks, sporadically on others and seemingly never on some. Perplexingly they were really simple commands, amounting to little else than sending back a reading of `R`'s internal state. Increasing the command deadline had no apparent effect. Adding logging in places helped little and in fact often resulted in the issue disappearing.
 
-Simplifying it quite a bit the ~S~ side looked something like this:
+Simplifying it quite a bit the `S` side looked something like this:
 {% highlight lisp linenos %}
 (defun handle-outbox (socket queue)
   (let ((command (pop queue)))
@@ -20,8 +20,8 @@ Simplifying it quite a bit the ~S~ side looked something like this:
 	(register-command-awaiting-response command))))
 
 (defun handle-inbox (socket)
-  (let ((reply (receive-incoming socket))
-	(corresponding-command
+  (let* ((response (receive-incoming socket))
+	 (corresponding-command
 	  (command-awaiting-response response)))
     (when corresponding-command
       (process-reply-for-command command response))))
