@@ -3,7 +3,7 @@ layout: post
 title: The Absent Narrator
 category: AI
 ---
-Why do we hate genAI works? Now before you say you don't let me reassert that you do. You don't read the code your models generate - and when you have to it's a chore. No AI artist ever was endeared with a generated birthday card. People who send out AI assisted communications rarely bother to read them, and so on.
+Why do we hate works by genAI? Now before you say you don't let me reassert that you do. You don't read the code your models generate - and when you have to it's a chore. No AI artist ever was endeared with a generated birthday card. People who send out AI assisted communications rarely bother to read them, and so on.
 
 Why, despite being a product of distillation attack on the totality of recorded human thought, generated works are seen as lacking intrinsic value?
 
